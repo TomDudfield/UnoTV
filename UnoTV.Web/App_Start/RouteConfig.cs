@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using LowercaseRoutesMVC4;
 
 namespace UnoTV.Web
 {
@@ -13,7 +14,7 @@ namespace UnoTV.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Game", action = "Index", id = UrlParameter.Optional }

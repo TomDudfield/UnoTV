@@ -12,5 +12,10 @@ namespace UnoTV.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Play()
+        {
+            return View();
+        }
     }
 }

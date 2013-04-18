@@ -6,12 +6,26 @@ using Microsoft.AspNet.SignalR;
 
 namespace UnoTV.Web.Hubs
 {
+    public class Message
+    {
+        public string PersonName { get; set; }
+
+        public string Data { get; set; }
+    }
+    
     public class PlayerHub : Hub
     {
-        public void Send(string name, string message)
+        private static readonly List<Message> Messages = new List<Message>();
+ 
+        public void Send(Message message)
         {
-            // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(name, message);
+            Messages.Add(message);
+            Clients.All.addNewMessageToPage(message);
+        }
+
+        public void GetAll()
+        {
+            Clients.Caller.allMessages(Messages);
         }
     }
 }
