@@ -16,9 +16,10 @@ namespace UnoTV.Web.Hubs
     public class PlayerHub : Hub
     {
         private static readonly List<Message> Messages = new List<Message>();
- 
+        
         public void Send(Message message)
         {
+            message.PersonName += " (" + Context.ConnectionId + ")";
             Messages.Add(message);
             Clients.All.addNewMessageToPage(message);
         }

@@ -176,10 +176,10 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Content\style.less" />
-    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\html5shiv.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <None Include="Scripts\jquery-2.0.0.intellisense.js" />
+    <Content Include="Scripts\jquery-2.0.0.js" />
+    <Content Include="Scripts\jquery-2.0.0.min.js" />
     <Content Include="Scripts\jquery.signalR-1.0.1.js" />
     <Content Include="Scripts\jquery.signalR-1.0.1.min.js" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
@@ -194,13 +194,13 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Shared\_html5shiv.cshtml" />
     <Content Include="Views\Game\Play.cshtml" />
     <Content Include="Views\Error\404.cshtml" />
     <Content Include="Views\Error\401.cshtml" />
     <Content Include="Views\Error\500.cshtml" />
     <Content Include="Views\Error\Unknown.cshtml" />
+    <Content Include="Scripts\jquery-2.0.0.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\" />
