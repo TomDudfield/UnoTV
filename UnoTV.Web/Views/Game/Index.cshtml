@@ -3,76 +3,52 @@
 }
 
 <h2>Table</h2>
-<h3>Some stuuf I did</h3>
 @Html.ActionLink("Play", "Play", "Game")
-<form data-bind="submit: addMessage">
-    <div class="container">
-        <input data-bind="value: newMessage" type="text" id="message" />
-        <input type="submit" value="Send" />
-        <input data-bind="value: localPersonName" type="hidden" />
-        <ul data-bind="template: { name: 'messageTemplate', foreach: messages }, visible: messages().length > 0">
-        </ul>
+<div>
+    <ul data-bind="template: { name: 'playerTemplate', foreach: players }, visible: players().length > 0">
+    </ul>
 
-        <script type="text/html" id="messageTemplate">
-            <li>
-                <strong><span data-bind="text: personName"></span>: <span data-bind="text: message"></span></strong>
-            </li>
-        </script>
-    </div>
-</form>
+    <script type="text/html" id="playerTemplate">
+        <li>
+            <strong><span data-bind="text: personName"></span></strong>
+        </li>
+    </script>
+</div>
 
 @section script
 {
     <script src="~/signalr/hubs"></script>
     <script>
         $(function () {
-            function messageViewModel(personName, message) {
+            function playerViewModel(personName) {
                 this.personName = personName;
-                this.message = message;
             }
             
-            function messageListViewModel() {
-                this.hub = $.connection.playerHub;
-                this.messages = ko.observableArray([]);
-                this.localPersonName = ko.observable();
-                this.newMessage = ko.observable();
-
-                var messages = this.messages;
+            function playerListViewModel() {
                 var self = this;
 
-                this.init = function () {
-                    this.localPersonName(prompt('Enter your name:', ''));
-                    this.hub.server.getAll();
-                };
-
-                this.hub.client.allMessages = function (allMessages) {
-                    var mappedMessages = $.map(allMessages, function (item) {
-                        return new messageViewModel(item.PersonName, item.Data);
-                    });
-
-                    messages(mappedMessages);
-                };
+                self.hub = $.connection.gameHub;
+                self.players = ko.observableArray([]);
                 
-                this.hub.client.addNewMessageToPage = function (m) {
-                    messages.push(new messageViewModel(m.PersonName, m.Data, self));
+                var players = self.players;
+
+                self.init = function () {
+                    
                 };
 
-                this.addMessage = function () {
-                    var m = { "PersonName": this.localPersonName(), "Data": this.newMessage() };
-                    this.hub.server.send(m).done(function () {
-                        console.log('Success!');
-                    }).fail(function(e) {
-                        console.warn(e);
-                    });
-                    this.newMessage("");
+                self.hub.client.playerJoined = function (personName) {
+                    players.push(new playerViewModel(personName));
+                };
+
+                self.hub.client.playerLeft = function (personName) {
+                    alert(personName);
+                    players.remove(new playerViewModel(personName));
                 };
             }
  
-            var vm = new messageListViewModel();
+            var vm = new playerListViewModel();
             ko.applyBindings(vm);
             $.connection.hub.start(function () { vm.init(); });
-            
-            $('#message').focus();
         });
     </script>
 }

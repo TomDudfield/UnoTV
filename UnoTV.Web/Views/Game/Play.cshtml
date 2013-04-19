@@ -3,3 +3,80 @@
 }
 
 <h2>Play</h2>
+<form data-bind="submit: addMessage">
+    <div>
+        <input data-bind="value: newMessage" type="text" id="message" />
+        <input type="submit" value="Send" />
+        <input data-bind="value: localPersonName" type="hidden" />
+        <ul data-bind="template: { name: 'messageTemplate', foreach: messages }, visible: messages().length > 0">
+        </ul>
+
+        <script type="text/html" id="messageTemplate">
+            <li>
+                <strong><span data-bind="text: personName"></span>: <span data-bind="text: message"></span></strong>
+            </li>
+        </script>
+    </div>
+</form>
+
+@section script
+{
+    <script src="~/signalr/hubs"></script>
+    <script>
+        $(function () {
+            function messageViewModel(personName, message) {
+                this.personName = personName;
+                this.message = message;
+            }
+            
+            function messageListViewModel() {
+                var self = this;
+
+                self.hub = $.connection.gameHub;
+                self.messages = ko.observableArray([]);
+                self.localPersonName = ko.observable();
+                self.newMessage = ko.observable();
+
+                var messages = self.messages;
+
+                self.init = function () {
+                    self.localPersonName(prompt('Enter your name:', ''));
+                    self.hub.server.getAll();
+                    self.hub.server.join(self.localPersonName()).done(function () {
+                        console.log('Success!');
+                    }).fail(function (e) {
+                        console.warn(e);
+                    });
+                };
+
+                self.hub.client.allMessages = function (allMessages) {
+                    var mappedMessages = $.map(allMessages, function (item) {
+                        return new messageViewModel(item.PersonName, item.Data);
+                    });
+
+                    messages(mappedMessages);
+                };
+                
+                self.hub.client.addNewMessageToPage = function (m) {
+                    messages.push(new messageViewModel(m.PersonName, m.Data));
+                };
+
+                self.addMessage = function () {
+                    var m = { "PersonName": self.localPersonName(), "Data": self.newMessage() };
+                    self.hub.server.send(m).done(function () {
+                        console.log('Success!');
+                    }).fail(function(e) {
+                        console.warn(e);
+                    });
+                    self.newMessage("");
+                };
+            }
+ 
+            var vm = new messageListViewModel();
+            ko.applyBindings(vm);
+            $.connection.hub.start(function () { vm.init(); });
+            
+            $('#message').focus();
+        });
+    </script>
+}

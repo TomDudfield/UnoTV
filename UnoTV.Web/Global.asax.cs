@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Microsoft.AspNet.SignalR;
 
 namespace UnoTV.Web
 {
@@ -15,6 +16,7 @@ namespace UnoTV.Web
     {
         protected void Application_Start()
         {
+            GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(10);
             RouteTable.Routes.MapHubs();
             AreaRegistration.RegisterAllAreas();
 
