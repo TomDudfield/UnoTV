@@ -29,6 +29,11 @@ namespace UnoTV.Web.Game
         private const int MaxSkipCount = 2;
 
         /// <summary>
+        /// Max number of wild cards
+        /// </summary>
+        private const int MaxWildCount = 2;
+
+        /// <summary>
         /// Number of cards that are dealt to each player.
         /// </summary>
         private const int CardsPerPlayer = 7;
@@ -68,6 +73,12 @@ namespace UnoTV.Web.Game
                     cards.Add(new Card { Colour = colour, Value = i, Type = CardType.Face });
                 }
             }
+
+            //for (var i = 1; i <= MaxWildCount; i++)
+            //{
+            //    cards.Add(new Card { Colour = string.Empty, Value = 50, Type = CardType.Wild });
+            //    cards.Add(new Card { Colour = string.Empty, Value = 50, Type = CardType.WildDraw });
+            //}
 
             cards.Shuffle();
             return cards;
