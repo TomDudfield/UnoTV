@@ -5,71 +5,51 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using UnoTV.Web.Domain;
+using UnoTV.Web.Game;
 
 namespace UnoTV.Web.Hubs
 {
     public class GameHub : Hub
     {
+        private static readonly GameState Game = new GameState();
+
         public void Join(string playerName)
         {
-            Clients.All.playerJoined(playerName);
+            Game.AddPlayer(new Player { Id = Context.ConnectionId, Name = playerName });
+            Clients.All.playerJoined(playerName); // table listens
         }
 
         public void StartGame()
         {
-            Clients.All.gameStarted();
+            Game.Start();
+            Clients.All.gameStarted(); // all clients listen
 
-            Clients.All.deal(new Hand());
+            foreach (var player in Game.Players)
+            {
+                Clients.Client(player.Id).deal(player.Hand); // send to each client in turn
+            }
 
-            Clients.All.turn(new Hand());
-
-            Clients.All.playerTurn("bob");
+            Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand); // send to current player
+            Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
         }
 
         public void PlayCard(Card card)
         {
-            Clients.All.cardPlayed(card);
+            Game.PlayCard(card);
+            Clients.All.cardPlayed(card); // table listens
 
-            Clients.All.turn(new Hand());
+            if (Game.Finished)
+            {
+                Clients.All.gameOver(Game.Winner); // all clients listen
+            }
+            else
+            {
+                Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand); // send to current player
+                Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
 
-            Clients.All.playerTurn("bob");
-
-            Clients.All.cardPickup("bob");
-
-            Clients.All.gameOver("bob");
+                if (!Game.CurrentPlayer.Hand.PlayableCards.Any())
+                    Clients.All.cardPickup(Game.CurrentPlayer.Name); // table listens
+            }
         }
-
-        //private static readonly List<Message> Messages = new List<Message>();
-        //private static readonly Dictionary<string, string> Players = new Dictionary<string, string>();
-        
-        //public void Send(Message message)
-        //{
-        //    message.PersonName += " (" + Context.ConnectionId + ")";
-        //    Messages.Add(message);
-        //    Clients.All.addNewMessageToPage(message);
-        //}
-
-        //public void Join(string personName)
-        //{
-        //    Players.Add(Context.ConnectionId, personName);
-        //    Clients.All.playerJoined(personName);
-        //}
-
-        //public void GetAll()
-        //{
-        //    Clients.Caller.allMessages(Messages);
-        //}
-
-        //public override Task OnDisconnected()
-        //{
-
-        //    if (Players.ContainsKey(Context.ConnectionId))
-        //    {
-        //        Clients.All.playerLeft(Players[Context.ConnectionId]);
-        //        Players.Remove(Context.ConnectionId);
-        //    }
-
-        //    return base.OnDisconnected();
-        //}
     }
 }

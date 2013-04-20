@@ -9,6 +9,12 @@ namespace UnoTV.Web.Game
     {
         public IList<Player> Players { get; set; }
 
+        public Player CurrentPlayer { get; set; }
+
+        public bool Finished { get; set; }
+
+        public Player Winner { get; set; }
+
         public GameState()
         {
             Players = new List<Player>();
@@ -29,6 +35,11 @@ namespace UnoTV.Web.Game
         public void Start()
         {
             Players.Shuffle();
+        }
+
+        public void PlayCard(Card card)
+        {
+            
         }
     }
 }
