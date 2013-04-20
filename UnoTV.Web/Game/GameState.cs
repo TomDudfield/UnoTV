@@ -78,10 +78,10 @@ namespace UnoTV.Web.Game
                 else
                     index++;
 
-                if (index > Players.Count)
+                if (index >= Players.Count)
                     index = 0;
                 if (index < 0)
-                    index = Players.Count;
+                    index = Players.Count - 1;
 
                 CurrentPlayer = Players[index];
             }

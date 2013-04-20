@@ -44,6 +44,7 @@ namespace UnoTV.Web.Tests.Game
 
             _gameState.Start();
 
+            Assert.AreEqual(7, _gameState.Players[1].Hand.PlayableCards.Count);
             Assert.AreEqual(_gameState.Players.First(), _gameState.CurrentPlayer);
             Assert.AreEqual(_gameState.PlayedCards.First(), _gameState.CurrentCard);
             Assert.IsFalse(_gameState.Cards.Contains(_gameState.CurrentCard));
@@ -55,12 +56,14 @@ namespace UnoTV.Web.Tests.Game
             _gameState.AddPlayer(new Player("{E6AB01BE-E623-492C-8390-01786604DD14}", "Bob"));
             _gameState.AddPlayer(new Player("{18DFB92D-7EF8-45F2-87AD-72FBC9ABE683}", "Tim"));
             _gameState.Start();
+            var nextPlayer = _gameState.Players[1];
             var card = _gameState.Cards.First();
 
             _gameState.PlayCard(card);
 
             Assert.AreEqual(card, _gameState.CurrentCard);
             Assert.IsTrue(_gameState.PlayedCards.Contains(card));
+            Assert.AreEqual(nextPlayer, _gameState.CurrentPlayer);
         }
     }
 }

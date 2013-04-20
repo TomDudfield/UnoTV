@@ -9,6 +9,11 @@ namespace UnoTV.Web.Domain
     {
         public IList<PlayableCard> PlayableCards { get; set; }
 
+        public bool HasPlayableCard
+        {
+            get { return true; }
+        }
+
         public Hand()
         {
             PlayableCards = new List<PlayableCard>();
