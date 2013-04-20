@@ -17,7 +17,7 @@ namespace UnoTV.Web.Domain
         [JsonIgnore]
         public bool HasPlayableCard
         {
-            get { return PlayableCards.Where(x => x.Playable).Count() > 0; }
+            get { return PlayableCards.Any(x => x.Playable); }
         }
 
         public Hand()

@@ -87,7 +87,11 @@ namespace UnoTV.Web.Game
             else
             {
                 if (card != null)
+                {
+                    if (card.Type == CardType.Reverse)
+                        _reverse = !_reverse;
                     CurrentPlayer.Hand.RemoveCard(card);
+                }
 
                 var index = Players.IndexOf(CurrentPlayer);
 

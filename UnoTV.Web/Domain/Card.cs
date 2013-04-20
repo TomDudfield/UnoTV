@@ -6,6 +6,7 @@ namespace UnoTV.Web.Domain
     {
         public string Colour { get; set; }
         public int Value { get; set; }
+        public string Type { get; set; }
     }
 
     public class CardColour
@@ -18,6 +19,21 @@ namespace UnoTV.Web.Domain
         public static IList<string> AsList()
         {
             return new List<string> { Blue, Green, Red, Yellow };
+        }
+    }
+
+    public class CardType
+    {
+        public const string Face = "face";
+        public const string Reverse = "reverse";
+        public const string Draw = "draw";
+        public const string Skip = "skip";
+        public const string Wild = "wild";
+        public const string WildDraw = "wilddraw";
+
+        public static IList<string> AsList()
+        {
+            return new List<string> { Face, Reverse, Draw, Skip, Wild, WildDraw };
         }
     }
 }

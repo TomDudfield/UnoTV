@@ -19,6 +19,11 @@ namespace UnoTV.Web.Domain
             get { return Card.Colour; }
         }
 
+        public string Type
+        {
+            get { return Card.Type; }
+        }
+
         public int Value
         {
             get { return Card.Value; }

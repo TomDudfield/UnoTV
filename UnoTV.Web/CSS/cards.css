@@ -2,15 +2,31 @@
 
 /* ---------- 01 debug coloring 
 
-.red{background-color: red;}
-.blue{background-color: blue;}
-.green{background-color: green;}
-.orange{background-color: orange;}
-.purple{background-color: purple;}
-.grey{background-color: grey;}
-.pink{background-color: pink;}
-
  End */ 
+.red {
+    color: red;
+    background-color: red;
+}
+.blue {
+    color: blue;
+    background-color: blue;
+}
+.green {
+    color: green;
+    background-color: green;
+}
+.yellow {
+    color: yellow;
+    background-color: yellow;
+}
+.purple{background-color: purple;}
+.grey {
+    background-color: grey;
+}
+.pink {
+    background-color: pink;
+}
+
 
 /*global styles*/
 
@@ -41,7 +57,6 @@ hr {
 	height: 375px;
 	margin: 10px;
 	border-radius: 10px;
-	background-color: green;
 }
 
 #head{
@@ -85,7 +100,6 @@ hr {
 	margin: 0 auto;
 	font-size: 5em;
 	font-weight: 900;
-	color: green;
 	text-shadow:10px 10px black;
 	width:120px;
 	/*border:solid 2px black;*/
