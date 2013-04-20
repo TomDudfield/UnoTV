@@ -45,6 +45,7 @@ hr {
 
 .outerContainer{
     background-color: white;
+    cursor: pointer;
 	width:250px;
 	height:395px;
 	border-radius: 20px;
