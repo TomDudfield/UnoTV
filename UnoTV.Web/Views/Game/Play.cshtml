@@ -5,10 +5,14 @@
 
 <h2>Play</h2>
 
-<section data-bind="visible: !gameActive()">
+<section data-bind="visible: !gameActive() && !gameOver()">
     <input name="playerName" data-bind="value: playerName" />
     <button data-bind="click: joinGame, visible: !gameReady()">Join</button>
     <button data-bind="click: startGame, visible: gameReady">Start</button>
+</section>
+<section data-bind="visible: gameOver()">
+    <div class="game-winner" data-bind="text: winner() + ' won the game'"></div>
+    <button data-bind="click: startGame">Start Another Game</button>
 </section>
 <section data-bind="visible: gameActive">
     <h2 data-bind="visible: playerActive">It's my turn!</h2>
