@@ -158,10 +158,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\CustomErrorHander.cs" />
     <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Domain\Card.cs" />
+    <Compile Include="Domain\Player.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\GameHub.cs" />
+    <Compile Include="Domain\Hand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
