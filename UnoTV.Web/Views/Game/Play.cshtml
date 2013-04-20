@@ -23,8 +23,8 @@
     <div data-bind="visible: playerActive">
         <h5>Playable cards</h5>
         <div data-bind="foreach: cards" class="cf">
-	        <div class="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
-		        <div class="innerContainer" data-bind="css: Colour">
+	        <div class="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }, attr: { class: Colour }">
+		        <div class="innerContainer">
 			        <div class="head">
 				        <div class="leftNumber" data-bind="text: Label"></div>
 			        </div>

@@ -12,18 +12,18 @@
     <ul data-bind="foreach: players">
         <li data-bind=" text: name "></li>
     </ul>
-	    <div class="outerContainer" data-bind="visible: card.Colour() ">
-		    <div class="innerContainer" data-bind="attr: { class: card.Colour }">
-			    <div class="head">
-				    <div class="leftNumber" data-bind="text: card.Value"></div>
-			    </div>
+	<div class="outerContainer" data-bind="visible: card.Colour(), attr: { class: card.Colour() + ' outerContainer' } ">
+		<div class="innerContainer">
+			<div class="head">
+				<div class="leftNumber" data-bind="text: card.Value"></div>
+			</div>
 		
-			    <div class="body">
-				    <div class="centreNumber" data-bind="text: card.Value"></div>
-			    </div>
+			<div class="body">
+				<div class="centreNumber" data-bind="text: card.Value"></div>
+			</div>
 
-			    <div data-bind="attr: { class: card.Colour }" class="footer">
-				    <div class="rightNumber" data-bind="text: card.Value"></div>
+			<div data-bind="attr: { class: card.Colour }" class="footer">
+				<div class="rightNumber" data-bind="text: card.Value"></div>
 		    </div>
 	    </div>
     </div>
