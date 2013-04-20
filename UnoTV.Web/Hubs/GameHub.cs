@@ -31,7 +31,7 @@ namespace UnoTV.Web.Hubs
 
             Clients.All.cardPlayed(Game.CurrentCard); // table listens
 
-            Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand); // send to current player
+            Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand, Game.CurrentCard); // send to current player
             Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
         }
 
@@ -46,7 +46,7 @@ namespace UnoTV.Web.Hubs
             }
             else
             {
-                Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand); // send to current player
+                Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand, Game.CurrentCard); // send to current player
                 Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
 
                 if (Game.CurrentPlayer.Hand.HasPlayableCard == false)
