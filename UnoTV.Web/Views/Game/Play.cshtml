@@ -20,11 +20,10 @@
     <p data-bind="text: 'points: ' + points()"></p>
 
     <div data-bind="visible: playerActive">
-        <h3>Playable cards</h3>
+        <h3>Changes!!! cards</h3>
             <div data-bind="foreach: cards">
-
 	            <div class="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
-		            <div class="innerContainer" data-bind="attr: { class: Colour }">
+		            <div class="innerContainer" data-bind="css: Colour">
 			            <div class="head">
 				            <div class="leftNumber" data-bind="text: Value"></div>
 			            </div>
@@ -34,8 +33,9 @@
 				            <div class="sd" style="color: black" data-bind="text: Type"></div>
 			            </div>
 
-			            <div data-bind="attr: { class: Colour }" class="footer">
+			            <div data-bind="css: Colour" class="footer">
 				            <div class="rightNumber" data-bind="text: Value"></div>
+                        </div>
 		            </div>
 	            </div>
             </div>
@@ -47,7 +47,7 @@
             <div data-bind="foreach: cards">
                 
 	            <div class="outerContainer">
-		            <div class="innerContainer" data-bind="attr: { class: Colour }">
+		            <div class="innerContainer" data-bind="css: Colour">
 			            <div class="head">
 				            <div class="leftNumber" data-bind="text: Value"></div>
 			            </div>
@@ -56,8 +56,9 @@
 				            <div class="centreNumber" data-bind="text: Value"></div>
 			            </div>
 
-			            <div data-bind="attr: { class: Colour }" class="footer">
+			            <div data-bind="css: Colour" class="footer">
 				            <div class="rightNumber" data-bind="text: Value"></div>
+                        </div>
 		            </div>
 	            </div>
             </div>
