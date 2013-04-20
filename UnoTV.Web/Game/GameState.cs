@@ -51,7 +51,6 @@ namespace UnoTV.Web.Game
 
             PlayCard(Cards.First());
             Cards.Remove(CurrentCard);
-            CurrentPlayer = Players.First();
         }
 
         /// <summary>
@@ -61,6 +60,12 @@ namespace UnoTV.Web.Game
         public void PlayCard(Card card)
         {
             PlayedCards.Add(card);
+
+            if (CurrentPlayer == null)
+                CurrentPlayer = Players.First();
+            // next player
+
+            PlayableCards.Process(CurrentPlayer.Hand.PlayableCards, CurrentCard);
         }
     }
 }
