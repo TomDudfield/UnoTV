@@ -1,0 +1,116 @@
+﻿
+
+/* ---------- 01 debug coloring 
+
+.red{background-color: red;}
+.blue{background-color: blue;}
+.green{background-color: green;}
+.orange{background-color: orange;}
+.purple{background-color: purple;}
+.grey{background-color: grey;}
+.pink{background-color: pink;}
+
+ End */ 
+
+/*global styles*/
+
+body{
+	font-size: 2.5em;
+	font-family:'Arial Bold', sans-serif;!important
+	text-shadow: 3px 3px 0px #000;
+	color:white;
+}
+hr {
+    clear: both;
+}
+
+/*end*/
+
+/*---------- 02 card layout*/ 
+
+#outerContainer{s
+	width:250px;
+	height:395px;
+	border-radius: 20px 20px 20px 20px;
+	float:left;
+	border:solid 1px black;
+}
+
+#innerContainer{
+	width:230px;
+	height: 375px;
+	margin: 10px;
+	border-radius: 10px;
+	background-color: green;
+}
+
+#head{
+	float: left;
+	/*height:50px; width:230px;*/
+	padding: 10px;
+	border-radius: 10px;
+}
+
+#body{
+	border-radius: 125px 0 125px 0;
+	height:234px;
+	float: left;
+	width:220px;
+	background-color:white;
+	margin:5px;
+}
+
+#footer{
+	float: right;
+	/*height:50px; width:230px;*/
+	padding: 10px;
+	border-radius: 10px;
+
+}
+
+#leftNumber{
+	/*height:50px;width:50px;*/
+	float:left;
+	text-shadow:3px 3px black;
+
+}
+
+#rightNumber{
+	/*height:50px;width:50px;*/
+	float:right;
+	text-shadow:3px 3px black;
+}
+
+#centreNumber{
+	margin: 0 auto;
+	font-size: 5em;
+	font-weight: 900;
+	color: green;
+	text-shadow:10px 10px black;
+	width:120px;
+	/*border:solid 2px black;*/
+}
+/*End*/ 
+
+
+
+
+
+
+/*#leftNumber{
+	float: left;
+}
+
+#rightNumber{
+	float:right;
+}
+
+#body{
+	text-align: center;*/
+/*}
+*/
+
+
+/*class 1 number card*/
+/*class 2 special card*/
+
