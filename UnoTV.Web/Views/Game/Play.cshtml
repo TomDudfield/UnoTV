@@ -1,3 +1,33 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+﻿@using System.Web.Optimization
+@{
+    ViewBag.Title = "Play";
+}
+
+<h2>Play</h2>
+
+<section data-bind="visible: !gameActive()">
+    <input name="playerName" data-bind="value: playerName" />
+    <button data-bind="click: joinGame, visible: !gameReady()">Join</button>
+    <button data-bind="click: startGame, visible: gameReady">Start</button>
+</section>
+<section data-bind="visible: gameActive">
+    <h2 data-bind="visible: playerActive">It's my turn!</h2>
+    <h3 data-bind="text: playerName"></h3>
+    <p data-bind="text: 'points: ' + points()"></p>
+
+    <div data-bind="visible: playerActive">
+        <h3>Playable cards</h3>
+            <div data-bind="foreach: cards">
+
+	            <div id="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
+		            <div id="innerContainer" data-bind="attr: { class: Colour }">
+			            <div id="head">
+				            <div id="leftNumber" data-bind="text: Value"></div>
+=======
+>>>>>>> 0f6566bc03ed4f697c00b11eb6e78bc04da1c81b
 ﻿@using System.Web.Optimization
 @{
     ViewBag.Title = "Play";
@@ -23,6 +53,10 @@
 		            <div class="innerContainer">
 			            <div class="head">
 				            <div class="leftNumber" data-bind="text: Value"></div>
+<<<<<<< HEAD
+=======
+>>>>>>> switched to classes for card css
+>>>>>>> 0f6566bc03ed4f697c00b11eb6e78bc04da1c81b
 			            </div>
 		
 			            <div class="body">
@@ -30,10 +64,35 @@
 				            <div class="sd" data-bind="text: Type"></div>
 			            </div>
 
+<<<<<<< HEAD
 			            <div class="grey footer">
 				            <div class="rightNumber" data-bind="text: Value"></div>
 		            </div>
 	            </div>
+=======
+<<<<<<< HEAD
+			            <div data-bind="attr: { class: Colour }" id="footer">
+				            <div id="rightNumber" data-bind="text: Value"></div>
+		            </div>
+	            </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div>
+        <h3>Full hand</h3>
+            <div data-bind="foreach: cards">
+                
+	            <div id="outerContainer">
+		            <div id="innerContainer" data-bind="attr: { class: Colour }">
+			            <div id="head">
+				            <div id="leftNumber" data-bind="text: Value"></div>
+=======
+			            <div class="grey footer">
+				            <div class="rightNumber" data-bind="text: Value"></div>
+		            </div>
+	            </div>
+>>>>>>> 0f6566bc03ed4f697c00b11eb6e78bc04da1c81b
                  <button data-bind="click: function(){$root.playCard($data)}">playcard</button>
             </div>
         </div>
@@ -47,6 +106,10 @@
 		            <div class="innerContainer">
 			            <div class="head">
 				            <div class="leftNumber" data-bind="text: Value"></div>
+<<<<<<< HEAD
+=======
+>>>>>>> switched to classes for card css
+>>>>>>> 0f6566bc03ed4f697c00b11eb6e78bc04da1c81b
 			            </div>
 		
 			            <div class="body">

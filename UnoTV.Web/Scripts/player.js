@@ -85,11 +85,8 @@ var playerVM = {
         playerVM.cards.remove(item);
         playerVM.playerActive(false);
         gameHub.server.playCard(card)
-            .done(function (result) {
-
-            })
             .fail(function (error) {
-
+                alert(error);
             });
     },
     joinGame: function () {
@@ -98,16 +95,13 @@ var playerVM = {
                 playerVM.gameReady(true);
             })
             .fail(function (error) {
-
+                alert("A game is alreay in progress!");
             });
     },
     startGame: function () {
         gameHub.server.startGame()
-             .done(function (result) {
-
-             })
              .fail(function (error) {
-
+                 alert("A game is alreay in progress!");
              });
     }
 };

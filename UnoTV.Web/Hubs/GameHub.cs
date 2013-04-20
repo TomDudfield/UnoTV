@@ -49,6 +49,7 @@ namespace UnoTV.Web.Hubs
             if (Game.Finished)
             {
                 Clients.All.gameOver(Game.Winner); // all clients listen
+                Game.ResetGame();
             }
             else
             {

@@ -1,3 +1,141 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+﻿
+
+/* ---------- 01 debug coloring 
+
+ End */ 
+.red {
+    color: red;
+    background-color: red;
+}
+.blue {
+    color: blue;
+    background-color: blue;
+}
+.green {
+    color: green;
+    background-color: green;
+}
+.yellow {
+    color: yellow;
+    background-color: yellow;
+}
+.purple{background-color: purple;}
+.grey {
+    background-color: grey;
+}
+.pink {
+    background-color: pink;
+}
+
+
+/*global styles*/
+
+body{
+	font-size: 2.5em;
+	font-family:'Arial Bold', sans-serif;!important
+	text-shadow: 3px 3px 0px #000;
+	color:white;
+}
+hr {
+    clear: both;
+}
+
+/*end*/
+
+/*---------- 02 card layout*/ 
+
+#outerContainer{
+	width:250px;
+	height:395px;
+	border-radius: 20px 20px 20px 20px;
+	float:left;
+	border:solid 1px black;
+	background-color:white;
+}
+
+#innerContainer{
+	width:230px;
+	height: 375px;
+	margin: 10px;
+	border-radius: 10px;
+}
+
+#head{
+	float: left;
+	/*height:50px; width:230px;*/
+	padding: 8px;
+	border-radius: 10px;
+}
+
+#body{
+	border-radius: 125px 0 125px 0;
+	height:234px;
+	float: left;
+	width:220px;
+	background-color:white;
+	margin:5px;
+}
+
+#footer{
+	float: right;
+	/*height:50px; width:230px;*/
+	padding: 8px;
+	border-radius: 10px;
+
+}
+
+#leftNumber{
+	/*height:50px;width:50px;*/
+	float:left;
+	color:white;
+	text-shadow:3px 3px black;
+
+}
+
+#rightNumber{
+	/*height:50px;width:50px;*/
+	float:right;
+	color:white;
+	text-shadow:3px 3px black;
+}
+
+#centreNumber{
+	margin: 0 auto;
+	font-size: 5em;
+	font-weight: 900;
+	text-shadow:10px 10px black;
+	width:120px;
+	/*border:solid 2px black;*/
+}
+/*End*/ 
+
+
+
+
+
+
+/*#leftNumber{
+	float: left;
+}
+
+#rightNumber{
+	float:right;
+}
+
+#body{
+	text-align: center;*/
+/*}
+*/
+
+
+/*class 1 number card*/
+/*class 2 special card*/
+
+=======
+>>>>>>> 0f6566bc03ed4f697c00b11eb6e78bc04da1c81b
 ﻿
 
 /* ---------- 01 debug coloring 
@@ -125,3 +263,7 @@ hr {
 /*class 1 number card*/
 /*class 2 special card*/
 
+<<<<<<< HEAD
+=======
+>>>>>>> switched to classes for card css
+>>>>>>> 0f6566bc03ed4f697c00b11eb6e78bc04da1c81b
