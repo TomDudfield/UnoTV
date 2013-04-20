@@ -89,23 +89,38 @@ namespace UnoTV.Web.Game
                 if (card != null)
                 {
                     if (card.Type == CardType.Reverse)
+                    {
                         _reverse = !_reverse;
+                    }
+
                     CurrentPlayer.Hand.RemoveCard(card);
                 }
 
                 var index = Players.IndexOf(CurrentPlayer);
 
-                if (_reverse)
-                    index--;
-                else
-                    index++;
+                index = UpdateIndex(index);
 
-                if (index >= Players.Count)
-                    index = 0;
-                if (index < 0)
-                    index = Players.Count - 1;
+                if (card != null && card.Type == CardType.Skip)
+                    index = UpdateIndex(index);
 
                 CurrentPlayer = Players[index];
+
+                if (card != null && card.Type == CardType.Skip)
+                {
+                    if (card.Type == CardType.WildDraw)
+                    {
+                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                    }
+
+                    if (card.Type == CardType.Draw || card.Type == CardType.WildDraw)
+                    {
+                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                        index = UpdateIndex(index);
+                        CurrentPlayer = Players[index];
+                    }
+                }
             }
             
             PlayableCards.Process(CurrentPlayer.Hand.PlayableCards, CurrentCard);
@@ -118,11 +133,25 @@ namespace UnoTV.Web.Game
 
         public void ResetGame()
         {
-            Players = new List<Player>();
             Started = false;
             _reverse = false;
             CurrentPlayer = null;
             PlayedCards = null;
+        }
+
+        private int UpdateIndex(int index)
+        {
+            if (_reverse)
+                index--;
+            else
+                index++;
+
+            if (index >= Players.Count)
+                index = 0;
+            if (index < 0)
+                index = Players.Count - 1;
+
+            return index;
         }
     }
 }

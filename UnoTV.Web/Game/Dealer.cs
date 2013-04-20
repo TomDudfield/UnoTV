@@ -19,6 +19,21 @@ namespace UnoTV.Web.Game
         private const int MaxReverseCount = 2;
 
         /// <summary>
+        /// Max number of draw cards per colour
+        /// </summary>
+        private const int MaxDrawCount = 2;
+
+        /// <summary>
+        /// Max number of skip cards per colour
+        /// </summary>
+        private const int MaxSkipCount = 2;
+
+        /// <summary>
+        /// Max number of wild cards
+        /// </summary>
+        private const int MaxWildCount = 2;
+
+        /// <summary>
         /// Number of cards that are dealt to each player.
         /// </summary>
         private const int CardsPerPlayer = 7;
@@ -34,11 +49,21 @@ namespace UnoTV.Web.Game
             foreach (var colour in CardColour.AsList())
             {
                 // only one card per colour with the value 0.
-                cards.Add(new Card { Colour = colour, Value = 0, Type = CardType.Face});
+                cards.Add(new Card { Colour = colour, Value = 0, Type = CardType.Face });
 
                 for (var i = 1; i <= MaxReverseCount; i++)
                 {
-                    cards.Add(new Card { Colour = colour, Value = -1, Type = CardType.Reverse });
+                    cards.Add(new Card { Colour = colour, Value = 20, Type = CardType.Reverse });
+                }
+
+                for (var i = 1; i <= MaxDrawCount; i++)
+                {
+                    cards.Add(new Card { Colour = colour, Value = 20, Type = CardType.Draw });
+                }
+
+                for (var i = 1; i <= MaxSkipCount; i++)
+                {
+                    cards.Add(new Card { Colour = colour, Value = 20, Type = CardType.Skip });
                 }
 
                 for (var i = 1; i <= MaxFaceValue; i++)
@@ -48,6 +73,12 @@ namespace UnoTV.Web.Game
                     cards.Add(new Card { Colour = colour, Value = i, Type = CardType.Face });
                 }
             }
+
+            //for (var i = 1; i <= MaxWildCount; i++)
+            //{
+            //    cards.Add(new Card { Colour = string.Empty, Value = 50, Type = CardType.Wild });
+            //    cards.Add(new Card { Colour = string.Empty, Value = 50, Type = CardType.WildDraw });
+            //}
 
             cards.Shuffle();
             return cards;

@@ -62,6 +62,7 @@ $.connection.hub.start()
 
 //methods for server to call
 gameHub.client.gameStarted = function (value) {
+    playerVM.gameOver(false);
     playerVM.gameActive(true);
 };
 gameHub.client.deal = function (hand) {
@@ -71,13 +72,20 @@ gameHub.client.turn = function (hand, current) {
     playerVM.playerActive(true);
     updateVM(hand, current);
 };
+gameHub.client.gameOver = function (winner) {
+    playerVM.winner(winner.Name);
+    playerVM.gameActive(false);
+    playerVM.gameOver(true);
+}
 
 var playerVM = {
     gameReady: ko.observable(),
     gameActive: ko.observable(),
+    gameOver: ko.observable(),
     playerActive: ko.observable(),
     playerName: ko.observable(),
     points: ko.observable(),
+    winner: ko.observable(),
     currentCard: ko.observable(),
     cards: ko.observableArray(),
     playCard: function(item) {
