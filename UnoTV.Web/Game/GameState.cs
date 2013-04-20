@@ -38,19 +38,27 @@ namespace UnoTV.Web.Game
         /// </summary>
         public void Start()
         {
+            if (Players.Count < 2)
+                throw new Exception("Two or more players required to start");
+
             Players.Shuffle();
             Cards = Dealer.CreateCards();
             PlayedCards = new List<Card>();
             Dealer.Deal(Players, Cards);
 
-            CurrentCard = Cards.First();
-            Cards.Remove(CurrentCard);
+            PlayCard(Cards.First());
             CurrentPlayer = Players.First();
         }
 
+        /// <summary>
+        /// Plays a card, removes from face down pile and adds to played pile
+        /// </summary>
+        /// <param name="card"></param>
         public void PlayCard(Card card)
         {
-
+            CurrentCard = card;
+            PlayedCards.Add(CurrentCard);
+            Cards.Remove(CurrentCard);
         }
     }
 }
