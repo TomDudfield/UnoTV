@@ -13,7 +13,10 @@ namespace UnoTV.Web.Game
         public bool Finished { get; set; }
         public Player Winner { get; set; }
 
-        public Card CurrentCard { get; set; }
+        public Card CurrentCard
+        {
+            get { return PlayedCards.LastOrDefault(); }
+        }
 
         public IList<Player> Players { get; set; }
         public IList<Card> Cards { get; set; }
@@ -47,6 +50,7 @@ namespace UnoTV.Web.Game
             Dealer.Deal(Players, Cards);
 
             PlayCard(Cards.First());
+            Cards.Remove(CurrentCard);
             CurrentPlayer = Players.First();
         }
 
@@ -56,9 +60,7 @@ namespace UnoTV.Web.Game
         /// <param name="card"></param>
         public void PlayCard(Card card)
         {
-            CurrentCard = card;
-            PlayedCards.Add(CurrentCard);
-            Cards.Remove(CurrentCard);
+            PlayedCards.Add(card);
         }
     }
 }
