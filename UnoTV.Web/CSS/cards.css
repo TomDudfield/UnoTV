@@ -101,3 +101,44 @@ hr {
 	text-shadow:10px 10px black;
 	width:120px;
 }
+
+.player-name, .current-points {
+    float: left;
+    font-size: 0.7em;
+}
+
+.player-name {
+    float: left;
+    margin-right: 20px;
+}
+
+.current-points {
+    float: right;
+}
+
+.your-turn {
+    text-align: center;
+    margin: 0.2em 0;
+}
+
+h5 {
+    margin: 0.2em 0;
+}
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
