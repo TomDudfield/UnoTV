@@ -33,6 +33,12 @@ namespace UnoTV.Web.Hubs
 
             Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand, Game.CurrentCard); // send to current player
             Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
+
+            if (Game.CurrentPlayer.Hand.HasPlayableCard == false)
+            {
+                Clients.All.cardPickup(Game.CurrentPlayer.Name); // table listens
+                PlayCard(null);
+            }
         }
 
         public void PlayCard(Card card)
