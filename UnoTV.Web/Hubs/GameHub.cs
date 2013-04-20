@@ -21,9 +21,6 @@ namespace UnoTV.Web.Hubs
 
         public void StartGame()
         {
-            if (Game.Players.Count < 2)
-                return;
-
             Game.Start();
             Clients.All.gameStarted(); // all clients listen
 
