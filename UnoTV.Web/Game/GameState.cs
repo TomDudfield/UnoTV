@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnoTV.Web.Domain;
 using UnoTV.Web.Utils;
+using System.Linq;
 
 namespace UnoTV.Web.Game
 {
@@ -39,6 +40,8 @@ namespace UnoTV.Web.Game
             Players.Shuffle();
             Cards = Dealer.CreateCards();
             Dealer.Deal(Players, Cards);
+
+            CurrentPlayer = Players.First();
         }
 
         public void PlayCard(Card card)
