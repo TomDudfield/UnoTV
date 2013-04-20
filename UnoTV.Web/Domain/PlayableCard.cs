@@ -1,26 +1,34 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace UnoTV.Web.Domain
 {
     public class PlayableCard
     {
-        private Card _card;
-
         public bool Playable { get; set; }
         public bool PickedUp { get; set; }
 
+        /// <summary>
+        /// Ignoring this as we don't want to send it to the client.
+        /// </summary>
+        [JsonIgnore]
+        public Card Card { get; set; }
+
         public string Colour
         {
-            get { return _card.Colour; }
+            get { return Card.Colour; }
         }
 
         public int Value
         {
-            get { return _card.Value; }
+            get { return Card.Value; }
         }
 
         public PlayableCard(Card card)
         {
-            _card = card;
+            Card = card;
         }
+
+        
     }
 }
