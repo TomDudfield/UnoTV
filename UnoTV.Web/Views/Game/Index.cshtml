@@ -6,14 +6,10 @@
 <h2>Table</h2>
 @Html.ActionLink("Play", "Play", "Game")
 <div>
-    <ul data-bind="template: { name: 'playerTemplate', foreach: players }, visible: players().length > 0">
+    <ul data-bind=" foreach: players ">
+        <li data-bind="text: name"></li>
     </ul>
-
-    <script type="text/html" id="playerTemplate">
-        <li>
-            <strong><span data-bind="text: personName"></span></strong>
-        </li>
-    </script>
+    
 </div>
 
 @section script
