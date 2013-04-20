@@ -64,15 +64,15 @@ $.connection.hub.start()
 gameHub.client.gameStarted = function (value) {
     playerVM.gameActive(true);
 };
-gameHub.client.deal = function (value) {
+gameHub.client.deal = function (hand) {
     //updateVM(value);
-    console.log(value);
-    updateVM(hand.hand);
+    console.log(hand);
+    updateVM(hand);
 };
-gameHub.client.turn = function (value) {
+gameHub.client.turn = function (hand, current) {
     //updateVM(value);
-    console.log(value);
-    updateVM(hand.hand);
+    console.log(hand);
+    updateVM(hand, current);
     playerVM.playerActive(true);
 };
 
@@ -90,6 +90,7 @@ var playerVM = {
             .done(function (result) {
                 console.log(card);
                 console.log('card played ' + result);
+                playerVM.cards.remove(item);
                 playerVM.playerActive(false);
             })
             .fail(function (error) {
@@ -117,20 +118,20 @@ var playerVM = {
     }
 };
 
-function updateVM(data) {
-    playerVM.playerActive(data.playerActive);
-    playerVM.playerName(data.playerName);
-    playerVM.points(data.points);
-    playerVM.currentCard(data.currentCard);
-    playerVM.cards(data.cards);
+function updateVM(data, current) {
+    //playerVM.playerActive(data.playerActive);
+    //playerVM.playerName(data.playerName);
+    var pointsTally = 0;
+    console.log(current);
+    if (current) {
+        playerVM.currentCard(current);
+    }
+    playerVM.cards(data.PlayableCards);
+    console.log(data.PlayableCards);
     ko.utils.arrayForEach(playerVM.cards(), function (item) {
-        item.value = ko.observable(item.value);
-        item.colour = ko.observable(item.colour);
-        item.playable = ko.observable(item.playable);
-        item.pickedUp = ko.observable(item.pickedUp);
+        pointsTally += item.Value;
     });
-    playerVM.currentCard().value = ko.observable(data.currentCard.value);
-    playerVM.currentCard().colour = ko.observable(data.currentCard.colour);
+    playerVM.points(pointsTally); //calculate from sum of all values
 };
 
 
