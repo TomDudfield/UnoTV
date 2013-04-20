@@ -46,9 +46,6 @@ namespace UnoTV.Web.Tests.Game
 
             Assert.AreEqual(_gameState.Players.First(), _gameState.CurrentPlayer);
             Assert.AreEqual(_gameState.PlayedCards.First(), _gameState.CurrentCard);
-
-
-
             Assert.IsFalse(_gameState.Cards.Contains(_gameState.CurrentCard));
         }
 

@@ -13,5 +13,10 @@ namespace UnoTV.Web.Domain
         {
             PlayableCards = new List<PlayableCard>();
         }
+
+        public void RemoveCard(Card card)
+        {
+
+        }
     }
 }

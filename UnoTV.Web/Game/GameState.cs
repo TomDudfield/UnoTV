@@ -8,6 +8,8 @@ namespace UnoTV.Web.Game
 {
     public class GameState
     {
+        private bool _reverse;
+
         public Player CurrentPlayer { get; set; }
 
         public bool Finished { get; set; }
@@ -62,9 +64,28 @@ namespace UnoTV.Web.Game
             PlayedCards.Add(card);
 
             if (CurrentPlayer == null)
+            {
                 CurrentPlayer = Players.First();
-            // next player
+            }
+            else
+            {
+                CurrentPlayer.Hand.RemoveCard(card);
 
+                var index = Players.IndexOf(CurrentPlayer);
+
+                if (_reverse)
+                    index--;
+                else
+                    index++;
+
+                if (index > Players.Count)
+                    index = 0;
+                if (index < 0)
+                    index = Players.Count;
+
+                CurrentPlayer = Players[index];
+            }
+            
             PlayableCards.Process(CurrentPlayer.Hand.PlayableCards, CurrentCard);
         }
     }
