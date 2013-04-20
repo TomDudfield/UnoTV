@@ -56,5 +56,10 @@ namespace UnoTV.Web.Hubs
                 }
             }
         }
+
+        public void ResetGame()
+        {
+            Game.ResetGame();
+        }
     }
 }

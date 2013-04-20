@@ -111,5 +111,14 @@ namespace UnoTV.Web.Game
                 CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard { Card = PlayedCards.Dequeue(), PickedUp = true, Playable = false });
             }
         }
+
+        public void ResetGame()
+        {
+            Players = new List<Player>();
+            Started = false;
+            _reverse = false;
+            CurrentPlayer = null;
+            PlayedCards = null;
+        }
     }
 }
