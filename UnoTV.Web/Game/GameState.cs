@@ -89,23 +89,27 @@ namespace UnoTV.Web.Game
                 if (card != null)
                 {
                     if (card.Type == CardType.Reverse)
+                    {
                         _reverse = !_reverse;
+                    }
+
                     CurrentPlayer.Hand.RemoveCard(card);
                 }
 
                 var index = Players.IndexOf(CurrentPlayer);
 
-                if (_reverse)
-                    index--;
-                else
-                    index++;
+                index = UpdateIndex(index);
 
-                if (index >= Players.Count)
-                    index = 0;
-                if (index < 0)
-                    index = Players.Count - 1;
+                if (card != null && card.Type == CardType.Skip)
+                    index = UpdateIndex(index);
 
                 CurrentPlayer = Players[index];
+
+                if (card != null && card.Type == CardType.Draw)
+                {
+                    CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                    CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                }
             }
             
             PlayableCards.Process(CurrentPlayer.Hand.PlayableCards, CurrentCard);
@@ -123,6 +127,21 @@ namespace UnoTV.Web.Game
             _reverse = false;
             CurrentPlayer = null;
             PlayedCards = null;
+        }
+
+        private int UpdateIndex(int index)
+        {
+            if (_reverse)
+                index--;
+            else
+                index++;
+
+            if (index >= Players.Count)
+                index = 0;
+            if (index < 0)
+                index = Players.Count - 1;
+
+            return index;
         }
     }
 }
