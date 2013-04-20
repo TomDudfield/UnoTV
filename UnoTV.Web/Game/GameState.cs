@@ -21,7 +21,6 @@ namespace UnoTV.Web.Game
         }
 
         public IList<Player> Players { get; set; }
-        public IList<Card> Cards { get; set; }
         public IList<Card> PlayedCards { get; set; }
 
         public GameState()
@@ -47,12 +46,11 @@ namespace UnoTV.Web.Game
                 throw new Exception("Two or more players required to start");
 
             Players.Shuffle();
-            Cards = Dealer.CreateCards();
-            PlayedCards = new List<Card>();
-            Dealer.Deal(Players, Cards);
+            var cards = Dealer.CreateCards();
+            Dealer.Deal(Players, cards);
 
-            PlayCard(Cards.First());
-            Cards.Remove(CurrentCard);
+            PlayedCards = cards;
+            PlayCard(cards.First());
         }
 
         /// <summary>
