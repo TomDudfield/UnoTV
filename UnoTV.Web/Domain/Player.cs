@@ -18,6 +18,6 @@ namespace UnoTV.Web.Domain
 
         public string Name { get; private set; }
 
-        public Hand Hand { get; private set; }
+        public Hand Hand { get; set; }
     }
 }
