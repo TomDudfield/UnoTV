@@ -86,19 +86,19 @@ var playerVM = {
     cards: ko.observableArray(),
     playCard: function(item) {
         var card = ko.toJS(item);
+        playerVM.cards.remove(item);
+        playerVM.playerActive(false);
         gameHub.server.playCard(card)
             .done(function (result) {
                 console.log(card);
                 console.log('card played ' + result);
-                playerVM.cards.remove(item);
-                playerVM.playerActive(false);
             })
             .fail(function (error) {
                 console.log('card not played ' + error);
             });
     },
     joinGame: function () {
-        gameHub.server.join(playerVM.playerName)
+        gameHub.server.join(playerVM.playerName())
             .done(function (result) {
                 console.log('joined ' + result);
                 playerVM.gameReady(true);

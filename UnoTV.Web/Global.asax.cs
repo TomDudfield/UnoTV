@@ -16,7 +16,6 @@ namespace UnoTV.Web
     {
         protected void Application_Start()
         {
-            GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(10);
             RouteTable.Routes.MapHubs();
             AreaRegistration.RegisterAllAreas();
 
