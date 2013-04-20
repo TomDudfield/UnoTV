@@ -4,21 +4,15 @@
 }
 
 <h2>Play</h2>
-<form data-bind="submit: addMessage">
-    <div>
-        <input data-bind="value: newMessage" type="text" id="message" />
-        <input type="submit" value="Send" />
-        <input data-bind="value: localPersonName" type="hidden" />
-        <ul data-bind="template: { name: 'messageTemplate', foreach: messages }, visible: messages().length > 0">
-        </ul>
 
-        <script type="text/html" id="messageTemplate">
-            <li>
-                <strong><span data-bind="text: personName"></span>: <span data-bind="text: message"></span></strong>
-            </li>
-        </script>
-    </div>
-</form>
+<ul data-bind="foreach: cards">
+    <li data-bind="attr: { class: colour }">
+        <span data-bind="text: value"></span>
+        <button data-bind="click: function(){$root.playCard($data)}">playcard</button>
+    </li>
+
+</ul>
+
 
 @section script
 {
