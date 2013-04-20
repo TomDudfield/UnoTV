@@ -10,11 +10,23 @@
 @Html.ActionLink("Play", "Play", "Game")
 <div>
     <ul data-bind="foreach: players">
-        <li data-bind=" text: name, attr: { class: active ? 'active' : '' } "></li>
+        <li data-bind=" text: name "></li>
     </ul>
-    <div class="card">
-        <strong>5</strong>
-    </div>
+    <div id="outerContainer" data-bind="attr: { class: card.Colour }">
+		            <div id="innerContainer">
+			            <div id="head">
+				            <div id="leftNumber" data-bind="text: card.Value"></div>
+			            </div>
+		
+			            <div id="body">
+				            <div id="centreNumber" data-bind="text: card.Value"></div>
+				            <div id="sd" data-bind="text: card.Type"></div>
+			            </div>
+
+			            <div class="grey" id="footer">
+				            <div id="rightNumber" data-bind="text: card.Value"></div>
+		            </div>
+	            </div>
 </div>
 
 @section script
