@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnoTV.Web.Domain;
 using UnoTV.Web.Utils;
+using System.Linq;
 
 namespace UnoTV.Web.Game
 {
@@ -11,6 +12,11 @@ namespace UnoTV.Web.Game
         /// Highest number visible on a card.
         /// </summary>
         private const int MaxFaceValue = 9;
+
+        /// <summary>
+        /// Number of cards that are dealt to each player.
+        /// </summary>
+        private const int CardsPerPlayer = 7;
 
         /// <summary>
         /// Creates a collection of cards that are available
@@ -35,6 +41,22 @@ namespace UnoTV.Web.Game
 
             cards.Shuffle();
             return cards;
+        }
+
+        /// <summary>
+        /// Deals the provided the cards to the provided players.
+        /// </summary>
+        public static void Deal(IList<Player> players, IList<Card> cards)
+        {
+            for (var i = 0; i < CardsPerPlayer; i++)
+            {
+                foreach (var player in players)
+                {
+                    var dealtCard = cards.First();
+                    player.Hand.PlayableCards.Add(dealtCard);
+                    cards.Remove(dealtCard);
+                }
+            }
         }
     }
 }
