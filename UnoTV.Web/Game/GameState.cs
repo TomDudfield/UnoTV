@@ -15,6 +15,8 @@ namespace UnoTV.Web.Game
 
         public Player Winner { get; set; }
 
+        public Card CurrentCard { get; set; }
+
         public GameState()
         {
             Players = new List<Player>();

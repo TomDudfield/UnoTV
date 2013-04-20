@@ -29,6 +29,8 @@ namespace UnoTV.Web.Hubs
                 Clients.Client(player.Id).deal(player.Hand); // send to each client in turn
             }
 
+            Clients.All.cardPlayed(Game.CurrentCard); // table listens
+
             Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand); // send to current player
             Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
         }
