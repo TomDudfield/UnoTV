@@ -29,6 +29,8 @@ namespace UnoTV.Web.Game
         public IList<Player> Players { get; set; }
         public Queue<Card> PlayedCards { get; set; }
 
+        public bool Started { get; set; }
+
         public GameState()
         {
             Players = new List<Player>();
@@ -40,6 +42,9 @@ namespace UnoTV.Web.Game
         /// </summary>
         public void AddPlayer(Player player)
         {
+            if (Started)
+                throw (new Exception("Can't join game that has already started."));
+
             Players.Add(player);
         }
 
@@ -51,6 +56,11 @@ namespace UnoTV.Web.Game
         {
             if (Players.Count < 2)
                 throw new Exception("Two or more players required to start");
+
+            if (Started)
+                throw (new Exception("Can't start game that has already started."));
+
+            Started = true;
 
             Players.Shuffle();
             var cards = Dealer.CreateCards();

@@ -46,7 +46,7 @@ namespace UnoTV.Web.Tests.Game
 
             Assert.AreEqual(7, _gameState.Players[1].Hand.PlayableCards.Count);
             Assert.AreEqual(_gameState.Players.First(), _gameState.CurrentPlayer);
-            Assert.AreEqual(_gameState.PlayedCards.First(), _gameState.CurrentCard);
+            Assert.AreEqual(_gameState.PlayedCards.Last(), _gameState.CurrentCard);
         }
 
         [Test]
