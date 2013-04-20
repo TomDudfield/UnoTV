@@ -122,7 +122,6 @@ namespace UnoTV.Web.Game
 
         public void ResetGame()
         {
-            Players = new List<Player>();
             Started = false;
             _reverse = false;
             CurrentPlayer = null;
