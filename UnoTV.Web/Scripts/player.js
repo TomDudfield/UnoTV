@@ -43,7 +43,7 @@
             "pickedUp": true
         }],
         "playerActive": true,
-        "playerName": "{}",
+        "playerName": "",
         "points": 20,
         "currentCard": {
             "value": 5,
@@ -54,28 +54,30 @@
 
 
 var gameHub = $.connection.gameHub;
-
 $.connection.hub.start()
 .done(function () {
     console.log("Now connected!");
-    gameHub.server.startGame()
-         .done(function (result) {
-             console.log(result);
-         })
-         .fail(function (error) {
-             console.log(error);
-         });
-
 })
 .fail(function () { console.log("Could not Connect!"); });
 
-
-//method for server to call
+//methods for server to call
 gameHub.client.gameStarted = function (value) {
-    console.log('Server called gameStarted(' + value + ')');
+    playerVM.gameActive(true);
+};
+gameHub.client.deal = function (value) {
+    //updateVM(value);
+    console.log(value);
+    updateVM(hand.hand);
+};
+gameHub.client.turn = function (value) {
+    //updateVM(value);
+    console.log(value);
+    updateVM(hand.hand);
+    playerVM.playerActive(true);
 };
 
 var playerVM = {
+    gameReady: ko.observable(),
     gameActive: ko.observable(),
     playerActive: ko.observable(),
     playerName: ko.observable(),
@@ -84,7 +86,34 @@ var playerVM = {
     cards: ko.observableArray(),
     playCard: function(item) {
         var card = ko.toJS(item);
-        console.log(card);
+        gameHub.server.playCard(card)
+            .done(function (result) {
+                console.log(card);
+                console.log('card played ' + result);
+                playerVM.playerActive(false);
+            })
+            .fail(function (error) {
+                console.log('card not played ' + error);
+            });
+    },
+    joinGame: function () {
+        gameHub.server.join(playerVM.playerName)
+            .done(function (result) {
+                console.log('joined ' + result);
+                playerVM.gameReady(true);
+            })
+            .fail(function (error) {
+                console.log('not joined ' + error);
+            });
+    },
+    startGame: function () {
+        gameHub.server.startGame()
+             .done(function (result) {
+                 console.log('started ' + result);
+             })
+             .fail(function (error) {
+                 console.log('not started ' + error);
+             });
     }
 };
 
@@ -104,6 +133,5 @@ function updateVM(data) {
     playerVM.currentCard().colour = ko.observable(data.currentCard.colour);
 };
 
-updateVM(hand.hand);
 
 ko.applyBindings(playerVM);

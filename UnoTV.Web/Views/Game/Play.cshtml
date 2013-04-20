@@ -5,14 +5,25 @@
 
 <h2>Play</h2>
 
-<ul data-bind="foreach: cards">
-    <li data-bind="attr: { class: colour }">
-        <span data-bind="text: value"></span>
-        <button data-bind="click: function(){$root.playCard($data)}">playcard</button>
-    </li>
-
-</ul>
-
+<section data-bind="visible: !gameActive()">
+    <input name="playerName" data-bind="value: playerName" />
+    <button data-bind="click: joinGame, visible: !gameReady()">Join</button>
+    <button data-bind="click: startGame, visible: gameReady">Start</button>
+</section>
+<section data-bind="visible: gameActive">
+    <h2 data-bind="visible: playerActive">It's my turn!</h2>
+    <ul data-bind="foreach: cards">
+        <li data-bind="attr: { class: colour }">
+            <span data-bind="text: value"></span>
+            <button data-bind="click: function(){$root.playCard($data)}">playcard</button>
+        </li>
+    </ul>
+<!-- ko foreach: cards -->
+    <div data-bind="visible: pickedUp">
+        <span data-bind="text: 'You picked up a ' + colour + ' ' + value"></span>
+    </div>
+<!-- /ko -->
+</section>
 
 @section script
 {
