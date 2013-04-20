@@ -40,6 +40,22 @@
         </div>
     </div>
     <hr />
+	<div class="outerContainer">
+		<div class="innerContainer" data-bind="css: currentCard.Colour">
+			<div class="head">
+				<div class="leftNumber" data-bind="text: currentCard.Label"></div>
+			</div>
+		
+			<div class="body">
+				<div class="centreNumber" data-bind="text: currentCard.Label"></div>
+			</div>
+
+			<div data-bind="css: currentCard.Colour" class="footer">
+				<div class="rightNumber" data-bind="text: currentCard.Label"></div>
+            </div>
+		</div>
+	</div>
+    <hr />
     <div>
         <h3>Full hand</h3>
             <div data-bind="foreach: cards">
