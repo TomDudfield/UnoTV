@@ -161,6 +161,7 @@
     <Compile Include="Domain\Card.cs" />
     <Compile Include="Domain\PlayableCard.cs" />
     <Compile Include="Domain\Player.cs" />
+    <Compile Include="Game\PlayableCards.cs" />
     <Compile Include="Game\Dealer.cs" />
     <Compile Include="Game\GameState.cs" />
     <Compile Include="Global.asax.cs">
