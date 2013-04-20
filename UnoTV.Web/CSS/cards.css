@@ -44,12 +44,13 @@ hr {
 
 /*---------- 02 card layout*/ 
 
-#outerContainer{s
+#outerContainer{
 	width:250px;
 	height:395px;
 	border-radius: 20px 20px 20px 20px;
 	float:left;
 	border:solid 1px black;
+	background-color:white;
 }
 
 #innerContainer{
@@ -62,7 +63,7 @@ hr {
 #head{
 	float: left;
 	/*height:50px; width:230px;*/
-	padding: 10px;
+	padding: 8px;
 	border-radius: 10px;
 }
 
@@ -78,7 +79,7 @@ hr {
 #footer{
 	float: right;
 	/*height:50px; width:230px;*/
-	padding: 10px;
+	padding: 8px;
 	border-radius: 10px;
 
 }
