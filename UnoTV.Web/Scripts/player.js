@@ -98,7 +98,7 @@ var playerVM = {
             });
     },
     joinGame: function () {
-        gameHub.server.join(playerVM.playerName)
+        gameHub.server.join(playerVM.playerName())
             .done(function (result) {
                 console.log('joined ' + result);
                 playerVM.gameReady(true);
