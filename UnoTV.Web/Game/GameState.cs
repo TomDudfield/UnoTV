@@ -8,6 +8,7 @@ namespace UnoTV.Web.Game
     public class GameState
     {
         public IList<Player> Players { get; set; }
+        public IList<Card> Cards { get; set; }
 
         public GameState()
         {
@@ -29,6 +30,7 @@ namespace UnoTV.Web.Game
         public void Start()
         {
             Players.Shuffle();
+            Cards = Dealer.CreateCards();
         }
     }
 }
