@@ -48,6 +48,8 @@ hr {
 	width:250px;
 	height:395px;
 	border-radius: 20px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 	float:left;
 	border:solid 1px black;
 }
