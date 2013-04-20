@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 namespace UnoTV.Web.Domain
 {
     public class Card
@@ -13,5 +14,10 @@ namespace UnoTV.Web.Domain
         public const string Green = "green";
         public const string Red = "red";
         public const string Yellow = "yellow";
+
+        public static IList<string> AsList()
+        {
+            return new List<string> { Blue, Green, Red, Yellow };
+        }
     }
 }

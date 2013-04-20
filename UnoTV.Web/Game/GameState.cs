@@ -7,13 +7,13 @@ namespace UnoTV.Web.Game
 {
     public class GameState
     {
-        public IList<Player> Players { get; set; }
-
         public Player CurrentPlayer { get; set; }
 
         public bool Finished { get; set; }
-
         public Player Winner { get; set; }
+
+        public IList<Player> Players { get; set; }
+        public IList<Card> Cards { get; set; }
 
         public GameState()
         {
@@ -35,11 +35,16 @@ namespace UnoTV.Web.Game
         public void Start()
         {
             Players.Shuffle();
+<<<<<<< HEAD
         }
 
         public void PlayCard(Card card)
         {
             
         }
+=======
+            Cards = Dealer.CreateCards();
+        }
+>>>>>>> feature/card-creation
     }
 }
