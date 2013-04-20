@@ -25,7 +25,11 @@ namespace UnoTV.Web.Game
         /// </summary>
         public static bool IsPlayable(PlayableCard card, Card activeCard)
         {
-            return (card.Colour == activeCard.Colour || (card.Value < 20 && card.Value == activeCard.Value) || card.Value == 50);
+            if (card.Type == CardType.Wild)
+                return true;
+            if (card.Type == CardType.WildDraw)
+                return true;
+            return (card.Colour == activeCard.Colour || (card.Value < 20 && card.Value == activeCard.Value));
         }
     }
 }
