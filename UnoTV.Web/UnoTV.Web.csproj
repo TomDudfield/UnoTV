@@ -184,6 +184,8 @@
     <Content Include="Scripts\jquery.signalR-1.0.1.min.js" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
+    <Content Include="Scripts\player.js" />
+    <Content Include="Scripts\table.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
