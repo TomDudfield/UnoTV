@@ -115,3 +115,4 @@ $.connection.hub.start()
 })(jQuery);
 
 $('.card').drags();
+
