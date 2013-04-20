@@ -29,6 +29,6 @@ namespace UnoTV.Web.Domain
             Card = card;
         }
 
-        
+        public PlayableCard() { }
     }
 }
