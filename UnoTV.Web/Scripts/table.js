@@ -25,7 +25,6 @@ ko.applyBindings(tableVM);
 //setup server connection
 var gameHub = $.connection.gameHub;
 gameHub.client.playerJoined = function (value) {
-    console.log('Server called player joined, name is (' + value + ')');
     //updateVM(value.table);
     tableVM.players.push({ name: value });
 };
@@ -53,7 +52,7 @@ gameHub.client.cardPlayed = function (card) {
 
 gameHub.client.gameOver = function (winner) {
     //updateVM(value.table);
-    alert('Game Over! ' + winner + ' won the round.');
+    alert('Game Over! ' + winner.Name + ' won the round.');
     console.log('Server called gameOver(' + value + ')');
     tableVM.restart(true);
 };
@@ -115,3 +114,10 @@ $.connection.hub.start()
 })(jQuery);
 
 $('.card').drags();
+
+$('.').each(function() {
+    if ($(this).val().length > 1) {
+        $(this).addClass('hack');
+    }
+});
+

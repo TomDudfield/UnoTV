@@ -1,9 +1,7 @@
 ﻿@using System.Web.Optimization
 @{
-    ViewBag.Title = "Play";
+    ViewBag.Title = "Let's Play Uno!";
 }
-
-<h2>Play</h2>
 
 <section data-bind="visible: !gameActive() && !gameOver()">
     <input name="playerName" data-bind="value: playerName" />
@@ -15,48 +13,68 @@
     <button data-bind="click: startGame">Start Another Game</button>
 </section>
 <section data-bind="visible: gameActive">
-    <h2 data-bind="visible: playerActive">It's my turn!</h2>
-    <h3 data-bind="text: playerName"></h3>
-    <p data-bind="text: 'points: ' + points()"></p>
+    <div class="player-info cf">
+        <div data-bind="text: playerName" class="player-name"></div>
+        <div data-bind="text: points() + ' Points'" class="current-points"></div>
+    </div>
+
+    <h5 data-bind="visible: playerActive" class="your-turn">It's your turn!</h5>
 
     <div data-bind="visible: playerActive">
-        <h3>Playable cards</h3>
-        <div data-bind="foreach: cards">
+        <h5>Playable cards</h5>
+        <div data-bind="foreach: cards" class="cf">
 	        <div class="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
-		        <div class="innerContainer" data-bind="css: Colour">
+		            <div class="innerContainer" data-bind="css: Colour">
 			        <div class="head">
-				        <div class="leftNumber" data-bind="text: Value"></div>
+				        <div class="leftNumber" data-bind="text: Label"></div>
 			        </div>
 		
 			        <div class="body">
-				        <div class="centreNumber" data-bind="text: Value"></div>
-				        <div class="sd" style="color: black" data-bind="text: Type"></div>
+				        <div class="centreNumber" data-bind="text: Label"></div>
 			        </div>
 
 			        <div data-bind="css: Colour" class="footer">
-				        <div class="rightNumber" data-bind="text: Value"></div>
+				        <div class="rightNumber" data-bind="text: Label"></div>
                     </div>
 		        </div>
 	        </div>
         </div>
     </div>
-    <hr />
+    <!--
+    <div class="cf">
+	    <div class="outerContainer" data-bind="visible: currentCard()">
+		    <div class="innerContainer" data-bind="css: currentCard().Colour">
+			    <div class="head">
+				    <div class="leftNumber" data-bind="text: currentCard().Label"></div>
+			    </div>
+		
+			    <div class="body">
+				    <div class="centreNumber" data-bind="text: currentCard().Label"></div>
+			    </div>
+
+			    <div data-bind="css: currentCard().Colour" class="footer">
+				    <div class="rightNumber" data-bind="text: currentCard().Label"></div>
+                </div>
+		    </div>
+	    </div>
+    </div>-->
+
     <div>
-        <h3>Full hand</h3>
-            <div data-bind="foreach: cards">
+        <h5>Full hand</h5>
+            <div data-bind="foreach: cards" class="cf">
                 
 	            <div class="outerContainer">
 		            <div class="innerContainer" data-bind="css: Colour">
 			            <div class="head">
-				            <div class="leftNumber" data-bind="text: Value"></div>
+				            <div class="leftNumber" data-bind="text: Label"></div>
 			            </div>
 		
 			            <div class="body">
-				            <div class="centreNumber" data-bind="text: Value"></div>
+				            <div class="centreNumber" data-bind="text: Label"></div>
 			            </div>
 
 			            <div data-bind="css: Colour" class="footer">
-				            <div class="rightNumber" data-bind="text: Value"></div>
+				            <div class="rightNumber" data-bind="text: Label"></div>
                         </div>
 		            </div>
 	            </div>

@@ -45,9 +45,12 @@ hr {
 
 .outerContainer{
     background-color: white;
+    cursor: pointer;
 	width:250px;
 	height:395px;
 	border-radius: 20px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 	float:left;
 	border:solid 1px black;
 }
@@ -96,8 +99,51 @@ hr {
 
 .centreNumber{
 	margin: 0 auto;
-	font-size: 5em;
+	font-size: 2.5em;
 	font-weight: 900;
+    text-align: center;
+    padding-top: 60px;
 	text-shadow:10px 10px black;
 	width:120px;
+}
+
+.player-name, .current-points {
+    float: left;
+    font-size: 0.7em;
+}
+
+.player-name {
+    float: left;
+    margin-right: 20px;
+}
+
+.current-points {
+    float: right;
+}
+
+.your-turn {
+    text-align: center;
+    margin: 0.2em 0;
+}
+
+h5 {
+    margin: 0.2em 0;
+}
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
 }

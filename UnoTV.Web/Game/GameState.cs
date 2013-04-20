@@ -137,6 +137,11 @@ namespace UnoTV.Web.Game
             _reverse = false;
             CurrentPlayer = null;
             PlayedCards = null;
+
+            foreach (var player in Players)
+            {
+                player.Hand = new Hand();
+            }
         }
 
         private int UpdateIndex(int index)
