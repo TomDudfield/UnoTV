@@ -9,24 +9,25 @@
 </style>
 @Html.ActionLink("Play", "Play", "Game")
 <div>
+     <button data-bind="click: function () { $root.method() }, visible: restart">Play again?</button>
     <ul data-bind="foreach: players">
         <li data-bind=" text: name "></li>
     </ul>
-    <div id="outerContainer" data-bind="attr: { class: card.Colour }">
-		            <div id="innerContainer">
-			            <div id="head">
-				            <div id="leftNumber" data-bind="text: card.Value"></div>
-			            </div>
+    <div class="outerContainer" data-bind="attr: { class: card.Colour() + ' outerContainer' }, visible: card.Colour()">
+		<div class="innerContainer">
+			<div class="head">
+				<div class="leftNumber" data-bind="text: card.Value"></div>
+			</div>
 		
-			            <div id="body">
-				            <div id="centreNumber" data-bind="text: card.Value"></div>
-				            <div id="sd" data-bind="text: card.Type"></div>
-			            </div>
+			<div class="body">
+				<div class="centreNumber" data-bind="text: card.Value"></div>
+				<div class="sd" data-bind="text: card.Type"></div>
+			</div>
 
-			            <div class="grey" id="footer">
-				            <div id="rightNumber" data-bind="text: card.Value"></div>
-		            </div>
-	            </div>
+			<div class="grey footer">
+				<div class="rightNumber" data-bind="text: card.Value"></div>
+		</div>
+	</div>
 </div>
 
 @section script

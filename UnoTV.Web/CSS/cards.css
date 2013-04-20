@@ -32,7 +32,7 @@
 
 body{
 	font-size: 2.5em;
-	font-family:'Arial Bold', sans-serif;!important
+	font-family:'Arial Bold', sans-serif;
 	text-shadow: 3px 3px 0px #000;
 	color:white;
 }
@@ -44,29 +44,28 @@ hr {
 
 /*---------- 02 card layout*/ 
 
-#outerContainer{s
+.outerContainer{
 	width:250px;
 	height:395px;
-	border-radius: 20px 20px 20px 20px;
+	border-radius: 20px;
 	float:left;
 	border:solid 1px black;
 }
 
-#innerContainer{
+.innerContainer{
 	width:230px;
 	height: 375px;
 	margin: 10px;
 	border-radius: 10px;
 }
 
-#head{
+.head{
 	float: left;
-	/*height:50px; width:230px;*/
 	padding: 10px;
 	border-radius: 10px;
 }
 
-#body{
+.body{
 	border-radius: 125px 0 125px 0;
 	height:234px;
 	float: left;
@@ -75,36 +74,32 @@ hr {
 	margin:5px;
 }
 
-#footer{
+.footer{
 	float: right;
-	/*height:50px; width:230px;*/
 	padding: 10px;
 	border-radius: 10px;
 
 }
 
-#leftNumber{
-	/*height:50px;width:50px;*/
+.leftNumber{
 	float:left;
 	color:white;
 	text-shadow:3px 3px black;
 
 }
 
-#rightNumber{
-	/*height:50px;width:50px;*/
+.rightNumber{
 	float:right;
 	color:white;
 	text-shadow:3px 3px black;
 }
 
-#centreNumber{
+.centreNumber{
 	margin: 0 auto;
 	font-size: 5em;
 	font-weight: 900;
 	text-shadow:10px 10px black;
 	width:120px;
-	/*border:solid 2px black;*/
 }
 /*End*/ 
 

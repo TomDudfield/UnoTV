@@ -1,30 +1,4 @@
-﻿//var tableData = {
-//    "table": {
-//        "players": [{
-//            "name": "Luke",
-//            "active": true
-//        },
-//        {
-//            "name": "Tim",
-//            "active": false
-//        },
-//        {
-//            "name": "Pete",
-//            "active": false
-//        },
-//        {
-//            "name": "Tom",
-//            "active": false
-//        }],
-//        "gameActive": true,
-//        "card": {
-//            "value": 1,
-//            "colour": "red"
-//        }
-//    }
-//};
-
-//setup view model
+﻿//setup view model
 var tableVM = {
     gameActive: ko.observable(),
     card: {
@@ -32,7 +6,8 @@ var tableVM = {
         Value: ko.observable()
     },
 
-    players: ko.observableArray()
+    players: ko.observableArray(),
+    restart: ko.observable(false)
 };
 
 function updateVM(data) {
@@ -50,7 +25,6 @@ ko.applyBindings(tableVM);
 //setup server connection
 var gameHub = $.connection.gameHub;
 gameHub.client.playerJoined = function (value) {
-    console.log(value)
     console.log('Server called player joined, name is (' + value + ')');
     //updateVM(value.table);
     tableVM.players.push({ name: value });
@@ -77,10 +51,11 @@ gameHub.client.cardPlayed = function (card) {
     }
 };
 
-gameHub.client.gameOver = function (value) {
+gameHub.client.gameOver = function (winner) {
     //updateVM(value.table);
-    alert('Game Over!');
-    console.log('Server called gameStarted(' + value + ')');
+    alert('Game Over! ' + winner + ' won the round.');
+    console.log('Server called gameOver(' + value + ')');
+    tableVM.restart(true);
 };
 
 $.connection.hub.start()
