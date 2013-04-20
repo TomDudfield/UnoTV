@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A30B8E
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnoTV.Web.Tests", "UnoTV.Web.Tests\UnoTV.Web.Tests.csproj", "{0CE00FDD-5B2F-4E55-89BA-337A691A57BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{1F9FCB9F-43CF-48A3-A04E-C4239D16CFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F9FCB9F-43CF-48A3-A04E-C4239D16CFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F9FCB9F-43CF-48A3-A04E-C4239D16CFD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CE00FDD-5B2F-4E55-89BA-337A691A57BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CE00FDD-5B2F-4E55-89BA-337A691A57BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CE00FDD-5B2F-4E55-89BA-337A691A57BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CE00FDD-5B2F-4E55-89BA-337A691A57BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
