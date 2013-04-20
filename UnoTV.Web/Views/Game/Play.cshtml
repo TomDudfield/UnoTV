@@ -19,19 +19,19 @@
         <h3>Playable cards</h3>
             <div data-bind="foreach: cards">
 
-	            <div id="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
-		            <div id="innerContainer" data-bind="attr: { class: Colour }">
-			            <div id="head">
-				            <div id="leftNumber" data-bind="text: Value"></div>
+	            <div class="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
+		            <div class="innerContainer" data-bind="attr: { class: Colour }">
+			            <div class="head">
+				            <div class="leftNumber" data-bind="text: Value"></div>
 			            </div>
 		
-			            <div id="body">
-				            <div id="centreNumber" data-bind="text: Value"></div>
-				            <div id="sd" style="color: black" data-bind="text: Type"></div>
+			            <div class="body">
+				            <div iclassd="centreNumber" data-bind="text: Value"></div>
+				            <div class="sd" style="color: black" data-bind="text: Type"></div>
 			            </div>
 
-			            <div data-bind="attr: { class: Colour }" id="footer">
-				            <div id="rightNumber" data-bind="text: Value"></div>
+			            <div data-bind="attr: { class: Colour }" class="footer">
+				            <div class="rightNumber" data-bind="text: Value"></div>
 		            </div>
 	            </div>
             </div>
@@ -42,18 +42,18 @@
         <h3>Full hand</h3>
             <div data-bind="foreach: cards">
                 
-	            <div id="outerContainer">
-		            <div id="innerContainer" data-bind="attr: { class: Colour }">
-			            <div id="head">
-				            <div id="leftNumber" data-bind="text: Value"></div>
+	            <div class="outerContainer">
+		            <div class="innerContainer" data-bind="attr: { class: Colour }">
+			            <div class="head">
+				            <div class="leftNumber" data-bind="text: Value"></div>
 			            </div>
 		
-			            <div id="body">
-				            <div id="centreNumber" data-bind="text: Value"></div>
+			            <div class="body">
+				            <div class="centreNumber" data-bind="text: Value"></div>
 			            </div>
 
-			            <div data-bind="attr: { class: Colour }" id="footer">
-				            <div id="rightNumber" data-bind="text: Value"></div>
+			            <div data-bind="attr: { class: Colour }" class="footer">
+				            <div class="rightNumber" data-bind="text: Value"></div>
 		            </div>
 	            </div>
             </div>
