@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
+using UnoTV.Web.Domain;
 
 namespace UnoTV.Web.Hubs
 {
@@ -18,7 +19,24 @@ namespace UnoTV.Web.Hubs
         {
             Clients.All.gameStarted();
 
-            Clients.All.deal();
+            Clients.All.deal(new Hand());
+
+            Clients.All.turn(new Hand());
+
+            Clients.All.playerTurn("bob");
+        }
+
+        public void PlayCard(Card card)
+        {
+            Clients.All.cardPlayed(card);
+
+            Clients.All.turn(new Hand());
+
+            Clients.All.playerTurn("bob");
+
+            Clients.All.cardPickup("bob");
+
+            Clients.All.gameOver("bob");
         }
 
         //private static readonly List<Message> Messages = new List<Message>();
