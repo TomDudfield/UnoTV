@@ -102,6 +102,29 @@ hr {
 	width:120px;
 }
 
+.player-name, .current-points {
+    float: left;
+    font-size: 0.7em;
+}
+
+.player-name {
+    float: left;
+    margin-right: 20px;
+}
+
+.current-points {
+    float: right;
+}
+
+.your-turn {
+    text-align: center;
+    margin: 0.2em 0;
+}
+
+h5 {
+    margin: 0.2em 0;
+}
+
 .cf:before,
 .cf:after {
     content: " "; /* 1 */
