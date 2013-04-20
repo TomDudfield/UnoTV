@@ -20,7 +20,7 @@
     <p data-bind="text: 'points: ' + points()"></p>
 
     <div data-bind="visible: playerActive">
-        <h3>Changes!!! cards</h3>
+        <h3>Playable cards</h3>
             <div data-bind="foreach: cards">
 	            <div class="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
 		            <div class="innerContainer" data-bind="css: Colour">
