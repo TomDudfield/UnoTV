@@ -7,10 +7,17 @@ namespace UnoTV.Web.Domain
 {
     public class Player
     {
-        public string Id { get; set; }
+        public Player(string id, string playerName)
+        {
+            Id = id;
+            Name = playerName;
+            Hand = new Hand();
+        }
 
-        public string Name { get; set; }
+        public string Id { get; private set; }
 
-        public Hand Hand { get; set; }
+        public string Name { get; private set; }
+
+        public Hand Hand { get; private set; }
     }
 }

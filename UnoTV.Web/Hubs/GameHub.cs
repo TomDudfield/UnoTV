@@ -15,7 +15,7 @@ namespace UnoTV.Web.Hubs
 
         public void Join(string playerName)
         {
-            Game.AddPlayer(new Player { Id = Context.ConnectionId, Name = playerName });
+            Game.AddPlayer(new Player(Context.ConnectionId, playerName));
             Clients.All.playerJoined(playerName); // table listens
         }
 
