@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,7 @@ namespace UnoTV.Web.Domain
         /// Returns flag indicating whether the player currently
         /// has a playable card.
         /// </summary>
+        [JsonIgnore]
         public bool HasPlayableCard
         {
             get { return PlayableCards.Where(x => x.Playable).Count() > 0; }
