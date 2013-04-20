@@ -4,10 +4,15 @@
 }
 
 <h2>Table</h2>
+<style>
+    .active {
+        color: red;
+    }
+</style>
 @Html.ActionLink("Play", "Play", "Game")
 <div>
-    <ul data-bind=" foreach: players ">
-        <li data-bind="text: name"></li>
+    <ul data-bind="foreach: players">
+        <li data-bind=" text: name, attr: { class: active ? 'active' : '' } "></li>
     </ul>
     
 </div>

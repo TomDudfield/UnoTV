@@ -32,7 +32,7 @@ var tableData2 = {
         },
         {
             "name": "Brock",
-            "active": false
+            "active": true
         },
         {
             "name": "Misty",
@@ -61,46 +61,9 @@ function updateVM(data) {
     tableVM.card(data.card);
     tableVM.players(data.players);
     
-    ko.utils.arrayForEach(tableVM.players(), function (item) {
-        item.name = ko.observable(item.name);
-        item.active = ko.observable(item.active);
-    });
-
     tableVM.card().value = ko.observable(data.card.value);
     tableVM.card().colour = ko.observable(data.card.colour);
 }
 
 updateVM(tableData.table);
 ko.applyBindings(tableVM);
-
-function makeRequest(request) {
-    /// <summary></summary>
-    /// <param name="request" type="Object">method, success, url</param>
-
-    request.method = request.method || 'GET';
-
-    var xhr = new XMLHttpRequest();
-    xhr.open(request.method, request.url);
-
-    xhr.onload = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                request.success();
-            }
-        }
-    };
-
-    xhr.onerror = request.error(xhr.statusText);
-
-    xhr.send(null);
-}
-
-makeRequest({
-    url: '',
-    success: function () {
-
-    },
-    error: function () {
-
-    }
-});

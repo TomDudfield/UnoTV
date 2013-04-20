@@ -9,9 +9,13 @@ namespace UnoTV.Web.Domain
     {
         public IList<PlayableCard> PlayableCards { get; set; }
 
+        /// <summary>
+        /// Returns flag indicating whether the player currently
+        /// has a playable card.
+        /// </summary>
         public bool HasPlayableCard
         {
-            get { return true; }
+            get { return PlayableCards.Where(x => x.Playable).Count() > 0; }
         }
 
         public Hand()
