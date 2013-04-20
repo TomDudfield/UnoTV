@@ -10,22 +10,29 @@ namespace UnoTV.Web.Game
     {
         private bool _reverse;
 
-        public Player CurrentPlayer { get; set; }
+        public bool Finished
+        {
+            get { return Players.Any(p => p.Hand.PlayableCards.Count == 0); }
+        }
 
-        public bool Finished { get; set; }
-        public Player Winner { get; set; }
+        public Player Winner
+        {
+            get { return Players.FirstOrDefault(p => p.Hand.PlayableCards.Count == 0); }
+        }
 
         public Card CurrentCard
         {
             get { return PlayedCards.LastOrDefault(); }
         }
 
+        public Player CurrentPlayer { get; set; }
         public IList<Player> Players { get; set; }
-        public IList<Card> PlayedCards { get; set; }
+        public Queue<Card> PlayedCards { get; set; }
 
         public GameState()
         {
             Players = new List<Player>();
+            _reverse = false;
         }
 
         /// <summary>
@@ -49,8 +56,9 @@ namespace UnoTV.Web.Game
             var cards = Dealer.CreateCards();
             Dealer.Deal(Players, cards);
 
-            PlayedCards = cards;
-            PlayCard(cards.First());
+            PlayedCards = new Queue<Card>(cards);
+            var card = PlayedCards.Dequeue();
+            PlayCard(card);
         }
 
         /// <summary>
@@ -59,7 +67,8 @@ namespace UnoTV.Web.Game
         /// <param name="card"></param>
         public void PlayCard(Card card)
         {
-            PlayedCards.Add(card);
+            if (card != null)
+                PlayedCards.Enqueue(card);
 
             if (CurrentPlayer == null)
             {
@@ -67,7 +76,8 @@ namespace UnoTV.Web.Game
             }
             else
             {
-                CurrentPlayer.Hand.RemoveCard(card);
+                if (card != null)
+                    CurrentPlayer.Hand.RemoveCard(card);
 
                 var index = Players.IndexOf(CurrentPlayer);
 
@@ -85,6 +95,11 @@ namespace UnoTV.Web.Game
             }
             
             PlayableCards.Process(CurrentPlayer.Hand.PlayableCards, CurrentCard);
+
+            if (CurrentPlayer.Hand.HasPlayableCard == false)
+            {
+                CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard { Card = PlayedCards.Dequeue(), PickedUp = true, Playable = false });
+            }
         }
     }
 }

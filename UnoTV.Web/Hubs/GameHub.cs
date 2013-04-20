@@ -53,7 +53,10 @@ namespace UnoTV.Web.Hubs
                 Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
 
                 if (Game.CurrentPlayer.Hand.HasPlayableCard == false)
+                {
                     Clients.All.cardPickup(Game.CurrentPlayer.Name); // table listens
+                    PlayCard(null);
+                }
             }
         }
     }
