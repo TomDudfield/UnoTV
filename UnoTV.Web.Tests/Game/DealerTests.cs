@@ -2,6 +2,7 @@
 using UnoTV.Web.Game;
 using System.Linq;
 using UnoTV.Web.Domain;
+using System.Collections.Generic;
 
 namespace UnoTV.Web.Tests.Game
 {
@@ -31,6 +32,32 @@ namespace UnoTV.Web.Tests.Game
 
             for (var i = 1; i <= 9; i++)
                 Assert.That(cards.Where(x => x.Value == i).Count(), Is.EqualTo(8));
+        }
+
+        [Test]
+        public void Deal_DealsCardsToEachPlayer()
+        {
+            var players = new List<Player> { new Player(), new Player() };
+            var cards = Dealer.CreateCards();
+
+            Dealer.Deal(players, cards);
+
+            foreach (var player in players)
+            {
+                Assert.That(player.Hand.PlayableCards.Count, Is.EqualTo(7));
+            }
+        }
+
+        [Test]
+        public void Deal_DealsCardsShouldBeRemovedFromDeck()
+        {
+            var players = new List<Player> { new Player(), new Player() };
+            var cards = Dealer.CreateCards();
+            var expectedCardsLeft = cards.Count - (players.Count * 7);
+
+            Dealer.Deal(players, cards);
+
+            Assert.That(cards.Count, Is.EqualTo(expectedCardsLeft));
         }
     }
 }

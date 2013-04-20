@@ -36,6 +36,7 @@ namespace UnoTV.Web.Game
         {
             Players.Shuffle();
             Cards = Dealer.CreateCards();
+            Dealer.Deal(Players, Cards);
         }
 
         public void PlayCard(Card card)
