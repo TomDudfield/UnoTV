@@ -29,6 +29,11 @@ namespace UnoTV.Web.Domain
             get { return Card.Value; }
         }
 
+        public string Label
+        {
+            get { return Card.Label; }
+        }
+
         public PlayableCard(Card card)
         {
             Card = card;

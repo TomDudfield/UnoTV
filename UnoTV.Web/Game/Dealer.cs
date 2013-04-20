@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnoTV.Web.Domain;
 using UnoTV.Web.Utils;
 using System.Linq;
@@ -58,7 +59,7 @@ namespace UnoTV.Web.Game
 
                 for (var i = 1; i <= MaxDrawCount; i++)
                 {
-                    cards.Add(new Card { Colour = colour, Value = 20, Type = CardType.Draw });
+                    cards.Add(new Card { Colour = colour, Value = 20, Label = "+2", Type = CardType.Draw });
                 }
 
                 for (var i = 1; i <= MaxSkipCount; i++)
@@ -69,15 +70,15 @@ namespace UnoTV.Web.Game
                 for (var i = 1; i <= MaxFaceValue; i++)
                 {
                     // add two cards per colour for each value.
-                    cards.Add(new Card { Colour = colour, Value = i, Type = CardType.Face });
-                    cards.Add(new Card { Colour = colour, Value = i, Type = CardType.Face });
+                    cards.Add(new Card { Colour = colour, Value = i, Label = i.ToString(CultureInfo.InvariantCulture), Type = CardType.Face });
+                    cards.Add(new Card { Colour = colour, Value = i, Label = i.ToString(CultureInfo.InvariantCulture), Type = CardType.Face });
                 }
             }
 
             //for (var i = 1; i <= MaxWildCount; i++)
             //{
             //    cards.Add(new Card { Colour = string.Empty, Value = 50, Type = CardType.Wild });
-            //    cards.Add(new Card { Colour = string.Empty, Value = 50, Type = CardType.WildDraw });
+            //    cards.Add(new Card { Colour = string.Empty, Value = 50, Label = "+4, Type = CardType.WildDraw });
             //}
 
             cards.Shuffle();
