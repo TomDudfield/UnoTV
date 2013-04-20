@@ -19,8 +19,8 @@
         <h3>Playable cards</h3>
             <div data-bind="foreach: cards">
 
-	            <div id="outerContainer" data-bind="attr: { class: Colour }, visible: Playable">
-		            <div id="innerContainer">
+	            <div id="outerContainer" data-bind="visible: Playable">
+		            <div id="innerContainer" data-bind="attr: { class: Colour }">
 			            <div id="head">
 				            <div id="leftNumber" data-bind="text: Value"></div>
 			            </div>
@@ -30,7 +30,7 @@
 				            <div id="sd" data-bind="text: Type"></div>
 			            </div>
 
-			            <div class="grey" id="footer">
+			            <div data-bind="attr: { class: Colour }" id="footer">
 				            <div id="rightNumber" data-bind="text: Value"></div>
 		            </div>
 	            </div>
@@ -42,9 +42,9 @@
     <div>
         <h3>Full hand</h3>
             <div data-bind="foreach: cards">
-
-	            <div id="outerContainer" data-bind="attr: { class: Colour }">
-		            <div id="innerContainer">
+                
+	            <div id="outerContainer" data-bind="visible: Playable">
+		            <div id="innerContainer" data-bind="attr: { class: Colour }">
 			            <div id="head">
 				            <div id="leftNumber" data-bind="text: Value"></div>
 			            </div>
