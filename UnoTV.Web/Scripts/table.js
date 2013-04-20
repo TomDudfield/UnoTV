@@ -53,7 +53,7 @@ gameHub.client.cardPlayed = function (card) {
 
 gameHub.client.gameOver = function (winner) {
     //updateVM(value.table);
-    alert('Game Over! ' + winner + ' won the round.');
+    alert('Game Over! ' + winner.Name + ' won the round.');
     console.log('Server called gameOver(' + value + ')');
     tableVM.restart(true);
 };
