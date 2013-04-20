@@ -53,7 +53,7 @@ namespace UnoTV.Web.Game
                 foreach (var player in players)
                 {
                     var dealtCard = cards.First();
-                    player.Hand.PlayableCards.Add(dealtCard);
+                    player.Hand.PlayableCards.Add(new PlayableCard(dealtCard));
                     cards.Remove(dealtCard);
                 }
             }
