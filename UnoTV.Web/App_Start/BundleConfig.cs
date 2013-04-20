@@ -19,9 +19,8 @@ namespace UnoTV.Web
                 ));
 
             bundles.Add(new LessBundle("~/content/less").Include(
-                "~/Content/style.less" 
+                "~/Content/style.less"
                 ));
-
             bundles.Add(new ScriptBundle("~/table").Include(
                 "~/Scripts/table.js"
                 ));
