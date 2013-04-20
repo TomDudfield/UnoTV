@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace UnoTV.Web.Domain
 {
     public class Card
     {
+        public string Colour { get; set; }
+        public int Value { get; set; }
+    }
+
+    public class CardColor
+    {
+        public const string Blue = "blue";
+        public const string Green = "green";
+        public const string Red = "red";
+        public const string Yellow = "yellow";
     }
 }
