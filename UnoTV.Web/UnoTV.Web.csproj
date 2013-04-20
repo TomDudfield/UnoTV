@@ -158,11 +158,19 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\CustomErrorHander.cs" />
     <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Domain\Card.cs" />
+    <Compile Include="Domain\PlayableCard.cs" />
+    <Compile Include="Domain\Player.cs" />
+    <Compile Include="Game\PlayableCards.cs" />
+    <Compile Include="Game\Dealer.cs" />
+    <Compile Include="Game\GameState.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\PlayerHub.cs" />
+    <Compile Include="Hubs\GameHub.cs" />
+    <Compile Include="Domain\Hand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ListExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -174,16 +182,19 @@
     <Content Include="Content\style.min.css">
       <DependentUpon>style.less</DependentUpon>
     </Content>
+    <Content Include="CSS\cards.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\style.less" />
-    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\html5shiv.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <None Include="Scripts\jquery-2.0.0.intellisense.js" />
+    <Content Include="Scripts\jquery-2.0.0.js" />
+    <Content Include="Scripts\jquery-2.0.0.min.js" />
     <Content Include="Scripts\jquery.signalR-1.0.1.js" />
     <Content Include="Scripts\jquery.signalR-1.0.1.min.js" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
+    <Content Include="Scripts\player.js" />
+    <Content Include="Scripts\table.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -194,13 +205,13 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Shared\_html5shiv.cshtml" />
     <Content Include="Views\Game\Play.cshtml" />
     <Content Include="Views\Error\404.cshtml" />
     <Content Include="Views\Error\401.cshtml" />
     <Content Include="Views\Error\500.cshtml" />
     <Content Include="Views\Error\Unknown.cshtml" />
+    <Content Include="Scripts\jquery-2.0.0.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\" />
