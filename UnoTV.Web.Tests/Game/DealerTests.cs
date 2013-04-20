@@ -12,7 +12,7 @@ namespace UnoTV.Web.Tests.Game
         {
             var cards = Dealer.CreateCards();
             
-            foreach (var colour in CardColor.AsList()) {
+            foreach (var colour in CardColour.AsList()) {
                 Assert.That(cards.Where(x => x.Colour == colour).Count() > 0, Is.True);
             }
         }

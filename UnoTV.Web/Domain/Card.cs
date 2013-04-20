@@ -8,7 +8,7 @@ namespace UnoTV.Web.Domain
         public int Value { get; set; }
     }
 
-    public class CardColor
+    public class CardColour
     {
         public const string Blue = "blue";
         public const string Green = "green";

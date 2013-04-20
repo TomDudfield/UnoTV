@@ -20,7 +20,7 @@ namespace UnoTV.Web.Game
         {
             var cards = new List<Card>();
 
-            foreach (var colour in CardColor.AsList())
+            foreach (var colour in CardColour.AsList())
             {
                 // only one card per colour with the value 0.
                 cards.Add(new Card { Colour = colour, Value = 0 });

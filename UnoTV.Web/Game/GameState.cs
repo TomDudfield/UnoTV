@@ -35,16 +35,12 @@ namespace UnoTV.Web.Game
         public void Start()
         {
             Players.Shuffle();
-<<<<<<< HEAD
+            Cards = Dealer.CreateCards();
         }
 
         public void PlayCard(Card card)
         {
-            
+
         }
-=======
-            Cards = Dealer.CreateCards();
-        }
->>>>>>> feature/card-creation
     }
 }
