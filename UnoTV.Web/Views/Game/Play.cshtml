@@ -21,7 +21,7 @@
 
     <div data-bind="visible: playerActive">
         <h3>Playable cards</h3>
-        <div data-bind="foreach: cards">
+        <div data-bind="foreach: cards" class="cf">
 	        <div class="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
 		        <div class="innerContainer" data-bind="css: Colour">
 			        <div class="head">
@@ -43,7 +43,7 @@
     <hr />
     <div>
         <h3>Full hand</h3>
-            <div data-bind="foreach: cards">
+            <div data-bind="foreach: cards" class="cf">
                 
 	            <div class="outerContainer">
 		            <div class="innerContainer" data-bind="css: Colour">
