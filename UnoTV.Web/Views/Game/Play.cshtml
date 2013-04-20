@@ -19,7 +19,7 @@
         <h3>Playable cards</h3>
             <div data-bind="foreach: cards">
 
-	            <div id="outerContainer" data-bind="visible: Playable">
+	            <div id="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
 		            <div id="innerContainer" data-bind="attr: { class: Colour }">
 			            <div id="head">
 				            <div id="leftNumber" data-bind="text: Value"></div>
@@ -34,7 +34,6 @@
 				            <div id="rightNumber" data-bind="text: Value"></div>
 		            </div>
 	            </div>
-                 <button data-bind="click: function(){$root.playCard($data)}">playcard</button>
             </div>
         </div>
     </div>
