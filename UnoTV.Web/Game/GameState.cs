@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnoTV.Web.Domain;
+using UnoTV.Web.Utils;
 
 namespace UnoTV.Web.Game
 {
@@ -19,6 +20,15 @@ namespace UnoTV.Web.Game
         public void AddPlayer(Player player)
         {
             Players.Add(player);
+        }
+
+        /// <summary>
+        /// Starts the game which determines the player order and deals
+        /// the initial hands to the players.
+        /// </summary>
+        public void Start()
+        {
+            Players.Shuffle();
         }
     }
 }
