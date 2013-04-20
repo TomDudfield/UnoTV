@@ -17,6 +17,7 @@ namespace UnoTV.Web.Game
 
         public IList<Player> Players { get; set; }
         public IList<Card> Cards { get; set; }
+        public IList<Card> PlayedCards { get; set; }
 
         public GameState()
         {
@@ -39,8 +40,11 @@ namespace UnoTV.Web.Game
         {
             Players.Shuffle();
             Cards = Dealer.CreateCards();
+            PlayedCards = new List<Card>();
             Dealer.Deal(Players, Cards);
 
+            CurrentCard = Cards.First();
+            Cards.Remove(CurrentCard);
             CurrentPlayer = Players.First();
         }
 
