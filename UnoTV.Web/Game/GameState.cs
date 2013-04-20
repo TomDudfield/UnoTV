@@ -105,10 +105,21 @@ namespace UnoTV.Web.Game
 
                 CurrentPlayer = Players[index];
 
-                if (card != null && card.Type == CardType.Draw)
+                if (card != null && card.Type == CardType.Skip)
                 {
-                    CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
-                    CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                    if (card.Type == CardType.WildDraw)
+                    {
+                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                    }
+
+                    if (card.Type == CardType.Draw || card.Type == CardType.WildDraw)
+                    {
+                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
+                        index = UpdateIndex(index);
+                        CurrentPlayer = Players[index];
+                    }
                 }
             }
             
