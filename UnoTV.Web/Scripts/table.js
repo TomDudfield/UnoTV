@@ -3,19 +3,27 @@ var tableVM = {
     gameActive: ko.observable(),
     card: {
         Colour: ko.observable(),
-        Value: ko.observable()
+        Value: ko.observable(),
+        Label: ko.observable()
     },
 
     players: ko.observableArray(),
-    restart: ko.observable(false)
+    restart: ko.observable(false),
+    resetGame: function() {
+        gameHub.server.resetGame()
+            .fail(function (error) {
+                alert(error);
+            });
+    }
 };
 
 function updateVM(data) {
     tableVM.gameActive(data.gameActive);
     tableVM.card(data.card);
     tableVM.players(data.players);
-    
+
     tableVM.card().value = ko.observable(data.card.value);
+    tableVM.card().label = ko.observable(data.card.label);
     tableVM.card().colour = ko.observable(data.card.colour);
 }
 
@@ -34,6 +42,11 @@ gameHub.client.gameStarted = function (value) {
     //updateVM(value.table);
 };
 
+gameHub.client.gameReset = function () {
+    console.log('Server called gameReset()');
+    tableVM.restart(true);
+};
+
 //fired on each turn
 gameHub.client.turn = function (value) {
     //updateVM(value.table);
@@ -47,6 +60,7 @@ gameHub.client.cardPlayed = function (card) {
     if (card !== null) {
         tableVM.card.Colour(card.Colour);
         tableVM.card.Value(card.Value);
+        tableVM.card.Label(card.Label);
     }
 };
 
@@ -114,10 +128,4 @@ $.connection.hub.start()
 })(jQuery);
 
 $('.card').drags();
-
-$('.').each(function() {
-    if ($(this).val().length > 1) {
-        $(this).addClass('hack');
-    }
-});
 

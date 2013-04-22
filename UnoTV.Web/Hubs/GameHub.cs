@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.SignalR;
 using UnoTV.Web.Domain;
 using UnoTV.Web.Game;
@@ -11,62 +8,89 @@ namespace UnoTV.Web.Hubs
 {
     public class GameHub : Hub
     {
-        private static readonly GameState Game = new GameState();
+        private static GameState _game = new GameState();
 
         public void Join(string playerName)
         {
-            Game.AddPlayer(new Player(Context.ConnectionId, playerName));
-            Clients.All.playerJoined(playerName); // table listens
+            try
+            {
+                _game.AddPlayer(new Player(Context.ConnectionId, playerName));
+                Clients.All.playerJoined(playerName); // table listens
+            }
+            catch (Exception ex)
+            {
+                Clients.Caller.error(ex);
+            }
         }
 
         public void StartGame()
         {
-            Game.Start();
-            Clients.All.gameStarted(); // all clients listen
-
-            foreach (var player in Game.Players)
+            try
             {
-                Clients.Client(player.Id).deal(player.Hand); // send to each client in turn
-            }
+                _game.Start();
+                Clients.All.gameStarted(); // all clients listen
 
-            Clients.All.cardPlayed(Game.CurrentCard); // table listens
-
-            Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand, Game.CurrentCard); // send to current player
-            Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
-
-            if (Game.CurrentPlayer.Hand.HasPlayableCard == false)
-            {
-                Clients.All.cardPickup(Game.CurrentPlayer.Name); // table listens
-                PlayCard(null);
-            }
-        }
-
-        public void PlayCard(Card card)
-        {
-            Game.PlayCard(card);
-            Clients.All.cardPlayed(card); // table listens
-
-            if (Game.Finished)
-            {
-                Clients.All.gameOver(Game.Winner); // all clients listen
-                Game.ResetGame();
-            }
-            else
-            {
-                Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand, Game.CurrentCard); // send to current player
-                Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
-
-                if (Game.CurrentPlayer.Hand.HasPlayableCard == false)
+                foreach (var player in _game.Players)
                 {
-                    Clients.All.cardPickup(Game.CurrentPlayer.Name); // table listens
-                    PlayCard(null);
+                    Clients.Client(player.Id).deal(player.Hand); // send to each client in turn
                 }
+
+                Clients.All.cardPlayed(_game.CurrentCard); // table listens
+                NotifyNextPlayer();
+            }
+            catch (Exception ex)
+            {
+                Clients.Caller.error(ex);
             }
         }
 
         public void ResetGame()
         {
-            Game.ResetGame();
+            try
+            {
+                _game = new GameState();
+                Clients.All.gameReset(); // all clients listen
+            }
+            catch (Exception ex)
+            {
+                Clients.Caller.error(ex);
+            }
+        }
+
+        public void PlayCard(Card card)
+        {
+            try
+            {
+                _game.PlayCard(card);
+                Clients.All.cardPlayed(card); // table listens
+
+                if (_game.Finished)
+                    Clients.All.gameOver(_game.Winner); // all clients listen
+                else
+                    NotifyNextPlayer();
+            }
+            catch (Exception ex)
+            {
+                Clients.Caller.error(ex);
+            }
+        }
+
+        public override Task OnDisconnected()
+        {
+            ResetGame();
+            return base.OnDisconnected();
+        }
+
+        private void NotifyNextPlayer()
+        {
+            Clients.Client(_game.CurrentPlayer.Id).turn(_game.CurrentPlayer.Hand); // send to current player
+            Clients.All.playerTurn(_game.CurrentPlayer.Name); // table listens
+
+            if (_game.CurrentPlayer.Hand.HasPlayableCard == false)
+            {
+                Clients.All.cardPickup(_game.CurrentPlayer.Name); // table listens
+                PlayCard(null);
+            }
         }
     }
 }

@@ -15,7 +15,6 @@ namespace UnoTV.Web.Game
             foreach (var playableCard in cards)
             {
                 playableCard.Playable = IsPlayable(playableCard, activeCard);
-                playableCard.PickedUp = false;
             }
         }
 

@@ -10,6 +10,21 @@ namespace UnoTV.Web.Domain
     {
         public IList<PlayableCard> PlayableCards { get; set; }
 
+        public int Total
+        {
+            get { return PlayableCards.Sum(c => c.Value); }
+        }
+
+        public int CardCount
+        {
+            get { return PlayableCards.Count; }
+        }
+
+        public int PlayableCardCount
+        {
+            get { return PlayableCards.Count(c => c.Playable); }
+        }
+
         /// <summary>
         /// Returns flag indicating whether the player currently
         /// has a playable card.

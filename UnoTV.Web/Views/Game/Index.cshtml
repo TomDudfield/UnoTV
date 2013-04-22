@@ -1,38 +1,37 @@
 ﻿@using System.Web.Optimization
 @{
-    ViewBag.Title = "Table";
+    ViewBag.Title = "Uno TV";
 }
 
-<h2>Table</h2>
-<style>
-    
-</style>
-@Html.ActionLink("Play", "Play", "Game")
+<h2>@ViewBag.Title</h2>
+
+<div data-bind="visible: !card.Colour()">
+    <a href="@Url.Action("Play", "Game")"><img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&choe=UTF-8&chld=H&chl=@Url.Action("Play", "Game", null, Request.Url.Scheme)" /></a>
+</div>
 <div>
     <ul data-bind="foreach: players">
-        <li data-bind=" text: name "></li>
+        <li data-bind="text: name "></li>
     </ul>
-	<div class="outerContainer" data-bind="visible: card.Colour(), attr: { class: card.Colour() + ' outerContainer' } ">
-		<div class="innerContainer">
-			<div class="head">
-				<div class="leftNumber" data-bind="text: card.Value"></div>
-			</div>
-		
-			<div class="body">
-				<div class="centreNumber" data-bind="text: card.Value"></div>
-			</div>
 
-			<div data-bind="attr: { class: card.Colour }" class="footer">
-				<div class="rightNumber" data-bind="text: card.Value"></div>
-		    </div>
-	    </div>
+    <button data-bind="click: function () { $root.resetGame() }">Reset</button>
+
+    <div class="outerCard" data-bind="visible: card.Colour()">
+        <div class="innerCard" data-bind="css: card.Colour">
+            <div class="topCard">
+                <div class="leftNumber" data-bind="text: card.Label"></div>
+            </div>
+            <div class="centreCard">
+                <div class="centreNumber" data-bind="text: card.Label"></div>
+            </div>
+            <div class="bottomCard">
+                <div class="rightNumber" data-bind="text: card.Label"></div>
+            </div>
+        </div>
     </div>
 </div>
 
 @section script
 {
     <script src="~/signalr/hubs"></script>
-
     @Scripts.Render("~/table")
-
-    }
+}

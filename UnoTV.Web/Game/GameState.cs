@@ -25,11 +25,10 @@ namespace UnoTV.Web.Game
             get { return PlayedCards.LastOrDefault(); }
         }
 
-        public Player CurrentPlayer { get; set; }
-        public IList<Player> Players { get; set; }
-        public Queue<Card> PlayedCards { get; set; }
-
-        public bool Started { get; set; }
+        public Player CurrentPlayer { get; private set; }
+        public IList<Player> Players { get; private set; }
+        public Queue<Card> PlayedCards { get; private set; }
+        public bool Started { get; private set; }
 
         public GameState()
         {
@@ -42,6 +41,8 @@ namespace UnoTV.Web.Game
         /// </summary>
         public void AddPlayer(Player player)
         {
+            if (Players.Count > 9)
+                throw new Exception("Too many players already in the game.");
             if (Started)
                 throw (new Exception("Can't join game that has already started."));
 
@@ -55,12 +56,20 @@ namespace UnoTV.Web.Game
         public void Start()
         {
             if (Players.Count < 2)
-                throw new Exception("Two or more players required to start");
-
+                throw new Exception("Two or more players required to start.");
             if (Started)
                 throw (new Exception("Can't start game that has already started."));
 
             Started = true;
+            ResetGame();
+        }
+
+        /// <summary>
+        /// Resets the game to initial hands.
+        /// </summary>
+        public void ResetGame()
+        {
+            _reverse = false;
 
             Players.Shuffle();
             var cards = Dealer.CreateCards();
@@ -80,67 +89,62 @@ namespace UnoTV.Web.Game
             if (card != null)
                 PlayedCards.Enqueue(card);
 
-            if (CurrentPlayer == null)
-            {
-                CurrentPlayer = Players.First();
-            }
+            if (CurrentPlayer != null && card != null)
+                CurrentPlayer.Hand.RemoveCard(card);
+
+            if (Finished)
+                Started = false;
             else
-            {
-                if (card != null)
-                {
-                    if (card.Type == CardType.Reverse)
-                    {
-                        _reverse = !_reverse;
-                    }
+                MoveToNextPlayer(card);
+        }
 
-                    CurrentPlayer.Hand.RemoveCard(card);
-                }
+        private void MoveToNextPlayer(Card card)
+        {
+            if (CurrentPlayer == null)
+                CurrentPlayer = Players.First();
 
-                var index = Players.IndexOf(CurrentPlayer);
+            if (card != null)
+                CurrentPlayer.Hand.RemoveCard(card);
 
+            var index = Players.IndexOf(CurrentPlayer);
+
+            index = UpdateIndex(index);
+
+            if (card != null && card.Type == CardType.Skip)
                 index = UpdateIndex(index);
 
-                if (card != null && card.Type == CardType.Skip)
-                    index = UpdateIndex(index);
+            CurrentPlayer = Players[index];
 
-                CurrentPlayer = Players[index];
+            foreach (var playableCard in CurrentPlayer.Hand.PlayableCards)
+            {
+                playableCard.PickedUp = false;
+            }
 
-                if (card != null && card.Type == CardType.Skip)
+            if (card != null)
+            {
+                if (card.Type == CardType.WildDraw)
                 {
-                    if (card.Type == CardType.WildDraw)
-                    {
-                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
-                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
-                    }
+                    CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue(), true));
+                    CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue(), true));
+                }
 
-                    if (card.Type == CardType.Draw || card.Type == CardType.WildDraw)
-                    {
-                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
-                        CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue()));
-                        index = UpdateIndex(index);
-                        CurrentPlayer = Players[index];
-                    }
+                if (card.Type == CardType.Draw || card.Type == CardType.WildDraw)
+                {
+                    CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue(), true));
+                    CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue(), true));
+                    index = UpdateIndex(index);
+                    CurrentPlayer = Players[index];
                 }
             }
-            
+
             PlayableCards.Process(CurrentPlayer.Hand.PlayableCards, CurrentCard);
 
             if (CurrentPlayer.Hand.HasPlayableCard == false)
             {
-                CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard { Card = PlayedCards.Dequeue(), PickedUp = true, Playable = false });
-            }
-        }
-
-        public void ResetGame()
-        {
-            Started = false;
-            _reverse = false;
-            CurrentPlayer = null;
-            PlayedCards = null;
-
-            foreach (var player in Players)
-            {
-                player.Hand = new Hand();
+                CurrentPlayer.Hand.PlayableCards.Add(new PlayableCard(PlayedCards.Dequeue(), true)
+                {
+                    Playable = false
+                });
             }
         }
 

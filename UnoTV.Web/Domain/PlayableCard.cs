@@ -34,9 +34,10 @@ namespace UnoTV.Web.Domain
             get { return Card.Label; }
         }
 
-        public PlayableCard(Card card)
+        public PlayableCard(Card card, bool pickedUp = false)
         {
             Card = card;
+            PickedUp = pickedUp;
         }
 
         public PlayableCard() { }

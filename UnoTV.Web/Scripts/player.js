@@ -1,88 +1,119 @@
-﻿
-var gameHub = $.connection.gameHub;
-$.connection.hub.start()
-.done(function () {
+﻿$(function() {
+    function playerViewModel() {
+        var self = this;
+        
+        self.gameHub = $.connection.gameHub;
 
-})
-.fail(function () { console.log("Could not Connect!"); });
+        self.currentPlayer = ko.observable();
+        self.currentCard = ko.observable();
+        self.gameReady = ko.observable();
+        self.gameActive = ko.observable();
+        self.gameOver = ko.observable();
+        self.playerActive = ko.observable();
+        self.playerName = ko.observable();
+        self.points = ko.observable();
+        self.winner = ko.observable();
+        self.cards = ko.observableArray();
 
-//methods for server to call
-gameHub.client.gameStarted = function (value) {
-    playerVM.gameOver(false);
-    playerVM.gameActive(true);
-};
-gameHub.client.deal = function (hand) {
-    updateVM(hand);
-};
-gameHub.client.turn = function (hand, current) {
-    playerVM.playerActive(true);
-    updateVM(hand, current);
-};
-gameHub.client.gameOver = function (winner) {
-    playerVM.winner(winner.Name);
-    playerVM.gameActive(false);
-    playerVM.gameOver(true);
-}
+        self.init = function () {
+            // todo test if is already started
+        };
 
-var playerVM = {
-    gameReady: ko.observable(),
-    gameActive: ko.observable(),
-    gameOver: ko.observable(),
-    playerActive: ko.observable(),
-    playerName: ko.observable(),
-    points: ko.observable(),
-    winner: ko.observable(),
-    currentCard: ko.observable(),
-    cards: ko.observableArray(),
-    playCard: function(item) {
-        var card = ko.toJS(item);
-        playerVM.cards.remove(item);
-        playerVM.playerActive(false);
-        gameHub.server.playCard(card)
-            .fail(function (error) {
-                alert(error);
-            });
-    },
-    joinGame: function () {
-        gameHub.server.join(playerVM.playerName())
-            .done(function (result) {
-                playerVM.gameReady(true);
-            })
-            .fail(function (error) {
-                alert("A game is alreay in progress!");
-            });
-    },
-    startGame: function () {
-        gameHub.server.startGame()
-             .fail(function (error) {
-                 alert("A game is alreay in progress!");
-             });
+        self.playCard = function (item) {
+            var card = ko.toJS(item);
+            self.points(self.points() - card.Value);
+            self.cards.remove(item);
+            self.playerActive(false);
+            self.gameHub.server.playCard(card)
+                .fail(function (error) {
+                    alert("Error! " + error);
+                    console.log(error);
+                });
+        };
+        
+        self.joinGame = function () {
+            if (self.playerName() == null) {
+                alert("Enter you name!");
+            } else {
+                self.gameHub.server.join(self.playerName())
+                    .done(function () {
+                        self.gameReady(true);
+                    })
+                    .fail(function (error) {
+                        alert("Error! " + error);
+                        console.log(error);
+                    });
+            }
+        };
+        
+        self.startGame = function () {
+            self.gameHub.server.startGame()
+                .fail(function (error) {
+                    alert("Error! " + error);
+                    console.log(error);
+                });
+        };
+        
+        self.gameHub.client.gameStarted = function () {
+            self.gameOver(false);
+            self.gameActive(true);
+        };
+        
+        self.gameHub.client.deal = function (hand) {
+            updateViewModel(hand);
+        };
+        
+        self.gameHub.client.turn = function (hand) {
+            self.playerActive(true);
+            updateViewModel(hand);
+        };
+        
+        self.gameHub.client.gameOver = function (winner) {
+            self.winner(winner.Name);
+            self.gameActive(false);
+            self.gameOver(true);
+        };
+
+        self.gameHub.client.playerTurn = function (player) {
+            self.currentPlayer(player);
+        };
+
+        self.gameHub.client.cardPlayed = function (card) {
+            self.currentCard(card);
+        };
+
+        self.gameHub.client.gameReset = function () {
+            if (self.gameActive()) {
+                alert("Game has been closed!");
+            }
+            
+            self.gameActive(false);
+            self.gameOver(false);
+            self.joinGame();
+        };
+
+        self.gameHub.client.error = function (error) {
+            alert(error.Message);
+        };
+        
+        function updateViewModel(hand) {
+            self.points(hand.Total);
+            self.cards(hand.PlayableCards);
+
+            if (hand.PlayableCardCount === 0) {
+                self.playerActive(false);
+            }
+        };
     }
-};
 
-function updateVM(data, current) {
-    var pointsTally = 0;
-
-    if (current) {
-        playerVM.currentCard(current);
-    }
-    playerVM.cards(data.PlayableCards);
-
-    var unplayableCardCount = 0;
-
-    ko.utils.arrayForEach(playerVM.cards(), function (item) {
-        pointsTally += item.Value;
-
-        if (item.Playable === false) {
-            unplayableCardCount++;
-        }
-    });
-    playerVM.points(pointsTally); //calculate from sum of all values
-
-    if (unplayableCardCount === playerVM.cards().length) {
-        playerVM.playerActive(false);
-    }
-};
-
-
-ko.applyBindings(playerVM);
+    var vm = new playerViewModel();
+    ko.applyBindings(vm);
+    $.connection.hub.start()
+        .done(function () {
+            vm.init();
+        })
+        .fail(function (error) {
+            alert("Error! " + error);
+            console.log(error);
+        });
+});
