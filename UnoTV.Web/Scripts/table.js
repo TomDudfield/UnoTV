@@ -1,85 +1,86 @@
-﻿//setup view model
-var tableVM = {
-    gameActive: ko.observable(),
-    card: {
-        Colour: ko.observable(),
-        Value: ko.observable(),
-        Label: ko.observable()
-    },
+﻿$(function() {
+    function tableViewModel() {
+        var self = this;
+        
+        self.gameHub = $.connection.gameHub;
 
-    players: ko.observableArray(),
-    restart: ko.observable(false),
-    resetGame: function() {
-        gameHub.server.resetGame()
-            .fail(function (error) {
-                alert(error);
+        self.players = ko.observableArray();
+        self.gameStarted = ko.observable(false);
+        self.card = {
+            Colour: ko.observable(),
+            Value: ko.observable(),
+            Label: ko.observable(),
+        };
+
+        self.init = function () {
+            // todo some checks
+        };
+        
+        self.resetGame = function() {
+            self.gameHub.server.resetGame()
+                .fail(function (error) {
+                    alert("Error! " + error);
+                    console.log(error);
+                });
+        };
+        
+        self.gameHub.client.playerJoined = function (player, id, total) {
+            self.players.push({ name: ko.observable(player), id: ko.observable(id), total: ko.observable(total), active: ko.observable(false) });
+        };
+
+        self.gameHub.client.gameStarted = function () {
+            self.gameStarted(true);
+        };
+
+        self.gameHub.client.playerTurn = function (player, id, total) {
+            self.players.remove(function (item) { return item.id() == id; });
+            ko.utils.arrayForEach(self.players(), function (p) {
+                p.active(false);
             });
-    }
-};
+            self.players.push({ name: ko.observable(player), id: ko.observable(id), total: ko.observable(total), active: ko.observable(true) });
+        };
 
-function updateVM(data) {
-    tableVM.gameActive(data.gameActive);
-    tableVM.card(data.card);
-    tableVM.players(data.players);
+        self.gameHub.client.cardPlayed = function (card) {
+            if (card != null) {
+                self.card.Colour(card.Colour);
+                self.card.Value(card.Value);
+                self.card.Label(card.Label);
+            }
+        };
 
-    tableVM.card().value = ko.observable(data.card.value);
-    tableVM.card().label = ko.observable(data.card.label);
-    tableVM.card().colour = ko.observable(data.card.colour);
-}
+        self.gameHub.client.gameReset = function () {
+            self.gameStarted(false);
+            self.players.removeAll();
+            self.card.Colour(null);
+            self.card.Value(null);
+            self.card.Label(null);
+        };
 
-//updateVM(tableData.table);
-ko.applyBindings(tableVM);
+        self.gameHub.client.gameOver = function (winner) {
+            ko.utils.arrayForEach(self.players(), function (p) {
+                p.active(false);
+            });
+            alert('Game Over! ' + winner.Name + ' won the round.');
+        };
+    };
 
-//setup server connection
-var gameHub = $.connection.gameHub;
-gameHub.client.playerJoined = function (value) {
-    //updateVM(value.table);
-    tableVM.players.push({ name: value });
-};
+    var vm = new tableViewModel();
+    ko.applyBindings(vm);
+    $.connection.hub.start()
+        .done(function () {
+            vm.init();
+        })
+        .fail(function (error) {
+            alert("Error! " + error);
+            console.log(error);
+        });
 
-gameHub.client.gameStarted = function (value) {
-    console.log('Server called gameStarted(' + value + ')');
-    //updateVM(value.table);
-};
-
-gameHub.client.gameReset = function () {
-    console.log('Server called gameReset()');
-    tableVM.restart(true);
-};
-
-//fired on each turn
-gameHub.client.turn = function (value) {
-    //updateVM(value.table);
-    //look for this to determine which player to animate
-    console.log('turn', value);
-};
-
-//fired when a card is played
-gameHub.client.cardPlayed = function (card) {
-    //show newly active card
-    if (card !== null) {
-        tableVM.card.Colour(card.Colour);
-        tableVM.card.Value(card.Value);
-        tableVM.card.Label(card.Label);
-    }
-};
-
-gameHub.client.gameOver = function (winner) {
-    //updateVM(value.table);
-    alert('Game Over! ' + winner.Name + ' won the round.');
-    console.log('Server called gameOver(' + value + ')');
-    tableVM.restart(true);
-};
-
-$.connection.hub.start()
-.done(function () {
-    console.log("Now connected!");
-})
-.fail(function () { console.log("Could not connect!"); });
+    $('.card').drags();
+});
 
 //draggable jquery plugin without jquery ui
-(function ($) {
-    $.fn.drags = function (opt) {
+(function($) {
+    $.fn.drags = function(opt) {
 
         opt = $.extend({ handle: "", cursor: "move" }, opt);
 
@@ -89,7 +90,7 @@ $.connection.hub.start()
             var $el = this.find(opt.handle);
         }
 
-        return $el.css('cursor', opt.cursor).on("mousedown", function (e) {
+        return $el.css('cursor', opt.cursor).on("mousedown", function(e) {
             if (opt.handle === "") {
                 var $drag = $(this).addClass('draggable');
             } else {
@@ -100,23 +101,23 @@ $.connection.hub.start()
                 drg_w = $drag.outerWidth(),
                 pos_y = $drag.offset().top + drg_h - e.pageY,
                 pos_x = $drag.offset().left + drg_w - e.pageX;
-            $drag.css('z-index', 1000).parents().on("mousemove", function (e) {
+            $drag.css('z-index', 1000).parents().on("mousemove", function(e) {
                 $('.draggable').offset({
                     top: e.pageY + pos_y - drg_h,
                     left: e.pageX + pos_x - drg_w
-                }).on("mouseup", function () {
+                }).on("mouseup", function() {
                     $(this).removeClass('draggable').css('z-index', z_idx);
                     if (e.pageY + pos_y - drg_h < 50) {
                         //$('.card').remove();
                         $('.card').addClass('slide-up');
-                        $('.card').on('oanimationend animationend webkitAnimationEnd', function () {
+                        $('.card').on('oanimationend animationend webkitAnimationEnd', function() {
                             $('.card').remove();
                         });
                     }
                 });
             });
             e.preventDefault(); // disable selection
-        }).on("mouseup", function () {
+        }).on("mouseup", function() {
             if (opt.handle === "") {
                 $(this).removeClass('draggable');
             } else {
@@ -124,8 +125,5 @@ $.connection.hub.start()
             }
         });
 
-    }
+    };
 })(jQuery);
-
-$('.card').drags();
-

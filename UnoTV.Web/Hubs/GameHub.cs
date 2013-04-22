@@ -15,7 +15,6 @@ namespace UnoTV.Web.Hubs
             try
             {
                 _game.AddPlayer(new Player(Context.ConnectionId, playerName));
-                Clients.All.playerJoined(playerName); // table listens
             }
             catch (Exception ex)
             {
@@ -33,6 +32,7 @@ namespace UnoTV.Web.Hubs
                 foreach (var player in _game.Players)
                 {
                     Clients.Client(player.Id).deal(player.Hand); // send to each client in turn
+                    Clients.All.playerJoined(player.Name, player.Id, player.Hand.Total); // table listens
                 }
 
                 Clients.All.cardPlayed(_game.CurrentCard); // table listens
@@ -84,7 +84,7 @@ namespace UnoTV.Web.Hubs
         private void NotifyNextPlayer()
         {
             Clients.Client(_game.CurrentPlayer.Id).turn(_game.CurrentPlayer.Hand); // send to current player
-            Clients.All.playerTurn(_game.CurrentPlayer.Name); // table listens
+            Clients.All.playerTurn(_game.CurrentPlayer.Name, _game.CurrentPlayer.Id, _game.CurrentPlayer.Hand.Total); // table listens
 
             if (_game.CurrentPlayer.Hand.HasPlayableCard == false)
             {

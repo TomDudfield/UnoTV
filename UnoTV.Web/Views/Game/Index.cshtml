@@ -5,12 +5,12 @@
 
 <h2>@ViewBag.Title</h2>
 
-<div data-bind="visible: !card.Colour()">
+<div data-bind="visible: !gameStarted()">
     <a href="@Url.Action("Play", "Game")"><img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&choe=UTF-8&chld=H&chl=@Url.Action("Play", "Game", null, Request.Url.Scheme)" /></a>
 </div>
 <div>
     <ul data-bind="foreach: players">
-        <li data-bind="text: name "></li>
+        <li><span data-bind="css: { activePlayer: active() }, text: name() + ' (Total ' + total() + ')'"></span></li>
     </ul>
 
     <button data-bind="click: function () { $root.resetGame() }">Reset</button>
