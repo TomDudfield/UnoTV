@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.SignalR;
 using UnoTV.Web.Domain;
 using UnoTV.Web.Game;
@@ -11,62 +10,98 @@ namespace UnoTV.Web.Hubs
 {
     public class GameHub : Hub
     {
-        private static readonly GameState Game = new GameState();
+        private static GameState _game = new GameState();
+        private static readonly List<Table> Tables = new List<Table>();
+
+        public void NewTable(string gameId)
+        {
+            try
+            {
+                Tables.Add(new Table(Context.ConnectionId, gameId));
+            }
+            catch (Exception ex)
+            {
+                Clients.Caller.error(ex);
+            }
+        }
 
         public void Join(string playerName)
         {
-            Game.AddPlayer(new Player(Context.ConnectionId, playerName));
-            Clients.All.playerJoined(playerName); // table listens
+            try
+            {
+                _game.AddPlayer(new Player(Context.ConnectionId, playerName));
+            }
+            catch (Exception ex)
+            {
+                Clients.Caller.error(ex);
+            }
         }
 
         public void StartGame()
         {
-            Game.Start();
-            Clients.All.gameStarted(); // all clients listen
-
-            foreach (var player in Game.Players)
+            try
             {
-                Clients.Client(player.Id).deal(player.Hand); // send to each client in turn
+                _game.Start();
+                Clients.All.gameStarted();
+
+                foreach (var player in _game.Players)
+                {
+                    Clients.Client(player.Id).deal(player.Hand);
+                    Clients.All.playerJoined(player.Name, player.Id, player.Hand.Total, player.Hand.CardCount);
+                }
+
+                Clients.All.cardPlayed(_game.CurrentCard);
+                NotifyNextPlayer();
             }
-
-            Clients.All.cardPlayed(Game.CurrentCard); // table listens
-
-            Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand, Game.CurrentCard); // send to current player
-            Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
-
-            if (Game.CurrentPlayer.Hand.HasPlayableCard == false)
+            catch (Exception ex)
             {
-                Clients.All.cardPickup(Game.CurrentPlayer.Name); // table listens
-                PlayCard(null);
+                Clients.Caller.error(ex);
             }
         }
 
         public void PlayCard(Card card)
         {
-            Game.PlayCard(card);
-            Clients.All.cardPlayed(card); // table listens
-
-            if (Game.Finished)
+            try
             {
-                Clients.All.gameOver(Game.Winner); // all clients listen
-                Game.ResetGame();
+                _game.PlayCard(card);
+                Clients.All.cardPlayed(card);
+
+                if (_game.Finished)
+                    Clients.All.gameOver(_game.Winner);
+                else
+                    NotifyNextPlayer();
             }
-            else
+            catch (Exception ex)
             {
-                Clients.Client(Game.CurrentPlayer.Id).turn(Game.CurrentPlayer.Hand, Game.CurrentCard); // send to current player
-                Clients.All.playerTurn(Game.CurrentPlayer.Name); // table listens
-
-                if (Game.CurrentPlayer.Hand.HasPlayableCard == false)
-                {
-                    Clients.All.cardPickup(Game.CurrentPlayer.Name); // table listens
-                    PlayCard(null);
-                }
+                Clients.Caller.error(ex);
             }
         }
 
-        public void ResetGame()
+        public override Task OnDisconnected()
         {
-            Game.ResetGame();
+            var table = Tables.FirstOrDefault(t => t.Id == Context.ConnectionId);
+
+            if (table != null)
+            {
+                Tables.Remove(table);
+                // todo end game
+            }
+
+            _game = new GameState();
+            Clients.All.gameReset();
+            return base.OnDisconnected();
+        }
+
+        private void NotifyNextPlayer()
+        {
+            Clients.Client(_game.CurrentPlayer.Id).turn(_game.CurrentPlayer.Hand);
+            Clients.All.playerTurn(_game.CurrentPlayer.Name, _game.CurrentPlayer.Id, _game.CurrentPlayer.Hand.Total, _game.CurrentPlayer.Hand.CardCount);
+
+            if (_game.CurrentPlayer.Hand.HasPlayableCard == false)
+            {
+                Clients.All.cardPickup(_game.CurrentPlayer.Name, _game.CurrentPlayer.Id);
+                PlayCard(null);
+            }
         }
     }
 }

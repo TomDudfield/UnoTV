@@ -1,71 +1,101 @@
-﻿//setup view model
-var tableVM = {
-    gameActive: ko.observable(),
-    card: {
-        Colour: ko.observable(),
-        Value: ko.observable()
-    },
+﻿$(function() {
+    function tableViewModel() {
+        var self = this;
+        
+        self.gameHub = $.connection.gameHub;
 
-    players: ko.observableArray(),
-    restart: ko.observable(false)
-};
+        self.gameId = ko.observable($('#gameId').val());
+        self.players = ko.observableArray();
+        self.gameStarted = ko.observable(false);
+        self.winner = ko.observable();
+        self.card = {
+            Colour: ko.observable(),
+            Value: ko.observable(),
+            Label: ko.observable(),
+        };
 
-function updateVM(data) {
-    tableVM.gameActive(data.gameActive);
-    tableVM.card(data.card);
-    tableVM.players(data.players);
-    
-    tableVM.card().value = ko.observable(data.card.value);
-    tableVM.card().colour = ko.observable(data.card.colour);
-}
+        self.init = function () {
+            self.gameHub.server.newTable(self.gameId())
+                .fail(function (error) {
+                    alert("Error! " + error);
+                    console.log(error);
+                });
+        };
+        
+        self.gameHub.client.playerJoined = function (player, id, total, cardCount) {
+            self.players.push({ name: ko.observable(player), id: ko.observable(id), total: ko.observable(total), cardCount: ko.observable(cardCount), active: ko.observable(false) });
+        };
 
-//updateVM(tableData.table);
-ko.applyBindings(tableVM);
+        self.gameHub.client.gameStarted = function () {
+            self.players.removeAll();
+            self.winner(null);
+            self.gameStarted(true);
+        };
 
-//setup server connection
-var gameHub = $.connection.gameHub;
-gameHub.client.playerJoined = function (value) {
-    //updateVM(value.table);
-    tableVM.players.push({ name: value });
-};
+        self.gameHub.client.playerTurn = function (player, id, total, cardCount) {
+            ko.utils.arrayForEach(self.players(), function (p) {
+                if (p.id() == id) {
+                    p.total(total);
+                    p.cardCount(cardCount);
+                    p.active(true);
+                }
+            });
+        };
 
-gameHub.client.gameStarted = function (value) {
-    console.log('Server called gameStarted(' + value + ')');
-    //updateVM(value.table);
-};
+        self.gameHub.client.cardPlayed = function (card) {
+            if (card != null) {
+                ko.utils.arrayForEach(self.players(), function (p) {
+                    if (p.active()) {
+                        p.total(p.total() - card.Value);
+                        p.cardCount(p.cardCount() - 1);
+                        p.active(false);
+                    }
+                });
+                self.card.Colour(card.Colour);
+                self.card.Value(card.Value);
+                self.card.Label(card.Label);
+            }
+        };
 
-//fired on each turn
-gameHub.client.turn = function (value) {
-    //updateVM(value.table);
-    //look for this to determine which player to animate
-    console.log('turn', value);
-};
+        self.gameHub.client.cardPickup = function (player, id) {
+            ko.utils.arrayForEach(self.players(), function (p) {
+                if (p.active() && p.id() == id) {
+                    p.active(false);
+                }
+            });
+        };
 
-//fired when a card is played
-gameHub.client.cardPlayed = function (card) {
-    //show newly active card
-    if (card !== null) {
-        tableVM.card.Colour(card.Colour);
-        tableVM.card.Value(card.Value);
-    }
-};
+        self.gameHub.client.gameReset = function () {
+            self.gameStarted(false);
+            self.players.removeAll();
+            self.card.Colour(null);
+            self.card.Value(null);
+            self.card.Label(null);
+        };
 
-gameHub.client.gameOver = function (winner) {
-    //updateVM(value.table);
-    alert('Game Over! ' + winner.Name + ' won the round.');
-    console.log('Server called gameOver(' + value + ')');
-    tableVM.restart(true);
-};
+        self.gameHub.client.gameOver = function (winner) {
+            self.winner(winner.Name);
+            self.gameStarted(false);
+        };
+    };
 
-$.connection.hub.start()
-.done(function () {
-    console.log("Now connected!");
-})
-.fail(function () { console.log("Could not connect!"); });
+    var vm = new tableViewModel();
+    ko.applyBindings(vm);
+    $.connection.hub.start()
+        .done(function () {
+            vm.init();
+        })
+        .fail(function (error) {
+            alert("Error! " + error);
+            console.log(error);
+        });
+
+    $('.card').drags();
+});
 
 //draggable jquery plugin without jquery ui
-(function ($) {
-    $.fn.drags = function (opt) {
+(function($) {
+    $.fn.drags = function(opt) {
 
         opt = $.extend({ handle: "", cursor: "move" }, opt);
 
@@ -75,7 +105,7 @@ $.connection.hub.start()
             var $el = this.find(opt.handle);
         }
 
-        return $el.css('cursor', opt.cursor).on("mousedown", function (e) {
+        return $el.css('cursor', opt.cursor).on("mousedown", function(e) {
             if (opt.handle === "") {
                 var $drag = $(this).addClass('draggable');
             } else {
@@ -86,23 +116,23 @@ $.connection.hub.start()
                 drg_w = $drag.outerWidth(),
                 pos_y = $drag.offset().top + drg_h - e.pageY,
                 pos_x = $drag.offset().left + drg_w - e.pageX;
-            $drag.css('z-index', 1000).parents().on("mousemove", function (e) {
+            $drag.css('z-index', 1000).parents().on("mousemove", function(e) {
                 $('.draggable').offset({
                     top: e.pageY + pos_y - drg_h,
                     left: e.pageX + pos_x - drg_w
-                }).on("mouseup", function () {
+                }).on("mouseup", function() {
                     $(this).removeClass('draggable').css('z-index', z_idx);
                     if (e.pageY + pos_y - drg_h < 50) {
                         //$('.card').remove();
                         $('.card').addClass('slide-up');
-                        $('.card').on('oanimationend animationend webkitAnimationEnd', function () {
+                        $('.card').on('oanimationend animationend webkitAnimationEnd', function() {
                             $('.card').remove();
                         });
                     }
                 });
             });
             e.preventDefault(); // disable selection
-        }).on("mouseup", function () {
+        }).on("mouseup", function() {
             if (opt.handle === "") {
                 $(this).removeClass('draggable');
             } else {
@@ -110,14 +140,5 @@ $.connection.hub.start()
             }
         });
 
-    }
+    };
 })(jQuery);
-
-$('.card').drags();
-
-$('.').each(function() {
-    if ($(this).val().length > 1) {
-        $(this).addClass('hack');
-    }
-});
-

@@ -1,38 +1,39 @@
 ﻿@using System.Web.Optimization
 @{
-    ViewBag.Title = "Table";
+    ViewBag.Title = "Uno TV";
+    var gameId = System.Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 22).Replace("/", "0").Replace("+", "9");
 }
 
-<h2>Table</h2>
-<style>
-    
-</style>
-@Html.ActionLink("Play", "Play", "Game")
+<h2>@ViewBag.Title</h2>
+<input id="gameId" data-bind="value: gameId()" type="hidden" value="@gameId" />
+<div data-bind="visible: !gameStarted()">
+    <a href="@Url.Action("Play", "Game")?gameId=@gameId"><img src="http://chart.apis.google.com/chart?cht=qr&chs=250x250&choe=UTF-8&chld=H&chl=@Url.Action("Play", "Game", null, Request.Url.Scheme)?gameId=@gameId" /></a>
+</div>
 <div>
+    <div data-bind="visible: winner">
+        <span data-bind="text: winner() + ' won the game'"></span>
+    </div>
     <ul data-bind="foreach: players">
-        <li data-bind=" text: name "></li>
+        <li><span data-bind="css: { activePlayer: active() }, text: name() + ' (Total ' + total() + ', Cards ' + cardCount() + ')'"></span></li>
     </ul>
-	<div class="outerContainer" data-bind="visible: card.Colour(), attr: { class: card.Colour() + ' outerContainer' } ">
-		<div class="innerContainer">
-			<div class="head">
-				<div class="leftNumber" data-bind="text: card.Value"></div>
-			</div>
-		
-			<div class="body">
-				<div class="centreNumber" data-bind="text: card.Value"></div>
-			</div>
-
-			<div data-bind="attr: { class: card.Colour }" class="footer">
-				<div class="rightNumber" data-bind="text: card.Value"></div>
-		    </div>
-	    </div>
+    
+    <div class="outerCard" data-bind="visible: card.Colour()">
+        <div class="innerCard" data-bind="css: card.Colour">
+            <div class="topCard">
+                <div class="leftNumber" data-bind="text: card.Label"></div>
+            </div>
+            <div class="centreCard">
+                <div class="centreNumber" data-bind="text: card.Label"></div>
+            </div>
+            <div class="bottomCard">
+                <div class="rightNumber" data-bind="text: card.Label"></div>
+            </div>
+        </div>
     </div>
 </div>
 
 @section script
 {
     <script src="~/signalr/hubs"></script>
-
     @Scripts.Render("~/table")
-
-    }
+}

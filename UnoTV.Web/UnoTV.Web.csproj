@@ -164,6 +164,7 @@
     <Compile Include="Game\PlayableCards.cs" />
     <Compile Include="Game\Dealer.cs" />
     <Compile Include="Game\GameState.cs" />
+    <Compile Include="Game\Table.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -182,7 +183,6 @@
     <Content Include="Content\style.min.css">
       <DependentUpon>style.less</DependentUpon>
     </Content>
-    <Content Include="CSS\cards.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\style.less" />
     <Content Include="Scripts\html5shiv.js" />

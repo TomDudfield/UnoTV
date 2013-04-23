@@ -50,7 +50,7 @@ namespace UnoTV.Web.Game
             foreach (var colour in CardColour.AsList())
             {
                 // only one card per colour with the value 0.
-                cards.Add(new Card { Colour = colour, Value = 0, Type = CardType.Face });
+                cards.Add(new Card { Colour = colour, Value = 0, Label = "0", Type = CardType.Face });
 
                 for (var i = 1; i <= MaxReverseCount; i++)
                 {
@@ -90,6 +90,11 @@ namespace UnoTV.Web.Game
         /// </summary>
         public static void Deal(IList<Player> players, IList<Card> cards)
         {
+            foreach (var player in players)
+            {
+                player.Hand = new Hand();
+            }
+
             for (var i = 0; i < CardsPerPlayer; i++)
             {
                 foreach (var player in players)

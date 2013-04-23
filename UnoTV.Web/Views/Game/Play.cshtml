@@ -3,89 +3,90 @@
     ViewBag.Title = "Let's Play Uno!";
 }
 
-<section data-bind="visible: !gameActive() && !gameOver()">
-    <input name="playerName" data-bind="value: playerName" />
+<input id="gameId" data-bind="value: gameId()" type="hidden" value="@Request.QueryString["gameId"]" />
+<section data-bind="        visible: !gameActive() && !gameOver() && (gameId() != '')">
+    <input name="playerName" data-bind="value: playerName, visible: !gameReady()" />
     <button data-bind="click: joinGame, visible: !gameReady()">Join</button>
     <button data-bind="click: startGame, visible: gameReady">Start</button>
 </section>
+
 <section data-bind="visible: gameOver()">
     <div class="game-winner" data-bind="text: winner() + ' won the game'"></div>
     <button data-bind="click: startGame">Start Another Game</button>
 </section>
+
 <section data-bind="visible: gameActive">
     <div class="player-info cf">
-        <div data-bind="text: playerName" class="player-name"></div>
-        <div data-bind="text: points() + ' Points'" class="current-points"></div>
+        <div data-bind="visible: playerActive()" class="your-turn">It's your turn!</div>
+        <div data-bind="visible: !playerActive(), text: currentPlayer() + '\'s turn'" class="their-turn"></div>
+        <div data-bind="text: 'Current hand ' + points()" class="current-points"></div>
     </div>
 
-    <h5 data-bind="visible: playerActive" class="your-turn">It's your turn!</h5>
+<!-- ko foreach: cards -->
+    <div data-bind="visible: PickedUp">
+        <span class="picked-up" data-bind="text: 'You picked up a ' + Colour + ' ' + Label"></span>
+    </div>
+<!-- /ko -->
 
     <div data-bind="visible: playerActive">
-        <h5>Playable cards</h5>
+        <div>Playable cards</div>
         <div data-bind="foreach: cards" class="cf">
-	        <div class="outerContainer" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
-		            <div class="innerContainer" data-bind="css: Colour">
-			        <div class="head">
+	        <div class="outerCard playable" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
+		            <div class="innerCard" data-bind="css: Colour">
+			        <div class="topCard">
 				        <div class="leftNumber" data-bind="text: Label"></div>
 			        </div>
-		
-			        <div class="body">
+			        <div class="centreCard">
 				        <div class="centreNumber" data-bind="text: Label"></div>
 			        </div>
-
-			        <div data-bind="css: Colour" class="footer">
+			        <div class="bottomCard">
 				        <div class="rightNumber" data-bind="text: Label"></div>
                     </div>
 		        </div>
 	        </div>
         </div>
     </div>
-    <!--
-    <div class="cf">
-	    <div class="outerContainer" data-bind="visible: currentCard()">
-		    <div class="innerContainer" data-bind="css: currentCard().Colour">
-			    <div class="head">
-				    <div class="leftNumber" data-bind="text: currentCard().Label"></div>
-			    </div>
-		
-			    <div class="body">
-				    <div class="centreNumber" data-bind="text: currentCard().Label"></div>
-			    </div>
-
-			    <div data-bind="css: currentCard().Colour" class="footer">
-				    <div class="rightNumber" data-bind="text: currentCard().Label"></div>
-                </div>
-		    </div>
-	    </div>
-    </div>-->
 
     <div>
-        <h5>Full hand</h5>
-            <div data-bind="foreach: cards" class="cf">
-                
-	            <div class="outerContainer">
-		            <div class="innerContainer" data-bind="css: Colour">
-			            <div class="head">
-				            <div class="leftNumber" data-bind="text: Label"></div>
-			            </div>
-		
-			            <div class="body">
-				            <div class="centreNumber" data-bind="text: Label"></div>
-			            </div>
+        <div>Full hand</div>
+        <div data-bind="foreach: cards" class="cf">
+	        <div class="outerCard">
+		        <div class="innerCard" data-bind="css: Colour">
+			        <div class="topCard">
+				        <div class="leftNumber" data-bind="text: Label"></div>
+			        </div>
+			        <div class="centreCard">
+				        <div class="centreNumber" data-bind="text: Label"></div>
+			        </div>
+			        <div class="bottomCard">
+				        <div class="rightNumber" data-bind="text: Label"></div>
+                    </div>
+		        </div>
+	        </div>
+        </div>
+    </div>
 
-			            <div data-bind="css: Colour" class="footer">
-				            <div class="rightNumber" data-bind="text: Label"></div>
-                        </div>
-		            </div>
-	            </div>
-            </div>
-    </div>
-<!-- ko foreach: cards -->
-    <div data-bind="visible: PickedUp">
-        <span data-bind="text: 'You picked up a ' + Colour + ' ' + Value"></span>
-    </div>
-<!-- /ko -->
+    <div data-bind="template: { name: 'currentCardTmpl', data: currentCard, if: currentCard }"></div>
 </section>
+
+<script id="currentCardTmpl" type="text/html">
+        <div>Current card</div>
+        <div class="cf">
+	        <div class="outerCard">
+		        <div class="innerCard" data-bind="css: Colour">
+			        <div class="topCard">
+				        <div class="leftNumber" data-bind="text: Label"></div>
+			        </div>
+			        <div class="centreCard">
+				        <div class="centreNumber" data-bind="text: Label"></div>
+			        </div>
+			        <div class="bottomCard">
+				        <div class="rightNumber" data-bind="text: Label"></div>
+                    </div>
+		        </div>
+	        </div>
+        </div>
+</script>
 
 @section script
 {
