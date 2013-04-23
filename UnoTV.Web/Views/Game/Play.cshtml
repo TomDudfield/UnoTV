@@ -3,7 +3,8 @@
     ViewBag.Title = "Let's Play Uno!";
 }
 
-<section data-bind="visible: !gameActive() && !gameOver()">
+<input id="gameId" data-bind="value: gameId()" type="hidden" value="@Request.QueryString["gameId"]" />
+<section data-bind="        visible: !gameActive() && !gameOver() && (gameId() != '')">
     <input name="playerName" data-bind="value: playerName, visible: !gameReady()" />
     <button data-bind="click: joinGame, visible: !gameReady()">Join</button>
     <button data-bind="click: startGame, visible: gameReady">Start</button>

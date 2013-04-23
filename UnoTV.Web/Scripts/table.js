@@ -4,8 +4,10 @@
         
         self.gameHub = $.connection.gameHub;
 
+        self.gameId = ko.observable($('#gameId').val());
         self.players = ko.observableArray();
         self.gameStarted = ko.observable(false);
+        self.winner = ko.observable();
         self.card = {
             Colour: ko.observable(),
             Value: ko.observable(),
@@ -13,39 +15,54 @@
         };
 
         self.init = function () {
-            // todo some checks
-        };
-        
-        self.resetGame = function() {
-            self.gameHub.server.resetGame()
+            self.gameHub.server.newTable(self.gameId())
                 .fail(function (error) {
                     alert("Error! " + error);
                     console.log(error);
                 });
         };
         
-        self.gameHub.client.playerJoined = function (player, id, total) {
-            self.players.push({ name: ko.observable(player), id: ko.observable(id), total: ko.observable(total), active: ko.observable(false) });
+        self.gameHub.client.playerJoined = function (player, id, total, cardCount) {
+            self.players.push({ name: ko.observable(player), id: ko.observable(id), total: ko.observable(total), cardCount: ko.observable(cardCount), active: ko.observable(false) });
         };
 
         self.gameHub.client.gameStarted = function () {
+            self.players.removeAll();
+            self.winner(null);
             self.gameStarted(true);
         };
 
-        self.gameHub.client.playerTurn = function (player, id, total) {
-            self.players.remove(function (item) { return item.id() == id; });
+        self.gameHub.client.playerTurn = function (player, id, total, cardCount) {
             ko.utils.arrayForEach(self.players(), function (p) {
-                p.active(false);
+                if (p.id() == id) {
+                    p.total(total);
+                    p.cardCount(cardCount);
+                    p.active(true);
+                }
             });
-            self.players.push({ name: ko.observable(player), id: ko.observable(id), total: ko.observable(total), active: ko.observable(true) });
         };
 
         self.gameHub.client.cardPlayed = function (card) {
             if (card != null) {
+                ko.utils.arrayForEach(self.players(), function (p) {
+                    if (p.active()) {
+                        p.total(p.total() - card.Value);
+                        p.cardCount(p.cardCount() - 1);
+                        p.active(false);
+                    }
+                });
                 self.card.Colour(card.Colour);
                 self.card.Value(card.Value);
                 self.card.Label(card.Label);
             }
+        };
+
+        self.gameHub.client.cardPickup = function (player, id) {
+            ko.utils.arrayForEach(self.players(), function (p) {
+                if (p.active() && p.id() == id) {
+                    p.active(false);
+                }
+            });
         };
 
         self.gameHub.client.gameReset = function () {
@@ -57,10 +74,8 @@
         };
 
         self.gameHub.client.gameOver = function (winner) {
-            ko.utils.arrayForEach(self.players(), function (p) {
-                p.active(false);
-            });
-            alert('Game Over! ' + winner.Name + ' won the round.');
+            self.winner(winner.Name);
+            self.gameStarted(false);
         };
     };
 

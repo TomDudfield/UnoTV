@@ -4,6 +4,7 @@
         
         self.gameHub = $.connection.gameHub;
 
+        self.gameId = ko.observable($('#gameId').val());
         self.currentPlayer = ko.observable();
         self.currentCard = ko.observable();
         self.gameReady = ko.observable();
@@ -16,7 +17,9 @@
         self.cards = ko.observableArray();
 
         self.init = function () {
-            // todo test if is already started
+            if (self.gameId() == "") {
+                alert("Game Id missing!");
+            }
         };
 
         self.playCard = function (item) {
