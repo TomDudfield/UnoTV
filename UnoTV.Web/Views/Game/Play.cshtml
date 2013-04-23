@@ -34,13 +34,13 @@
 	        <div class="outerCard playable" data-bind="visible: Playable, click: function () { $root.playCard($data) }">
 		            <div class="innerCard" data-bind="css: Colour">
 			        <div class="topCard">
-				        <div class="leftNumber" data-bind="text: Label"></div>
+				        <div class="leftNumber" data-bind="css: 'card' + Type, text: Label"></div>
 			        </div>
 			        <div class="centreCard">
-				        <div class="centreNumber" data-bind="text: Label"></div>
+				        <div class="centreNumber" data-bind="css: 'card' + Type + Colour, text: Label"></div>
 			        </div>
 			        <div class="bottomCard">
-				        <div class="rightNumber" data-bind="text: Label"></div>
+				        <div class="rightNumber" data-bind="css: 'card' + Type, text: Label"></div>
                     </div>
 		        </div>
 	        </div>
@@ -53,13 +53,13 @@
 	        <div class="outerCard">
 		        <div class="innerCard" data-bind="css: Colour">
 			        <div class="topCard">
-				        <div class="leftNumber" data-bind="text: Label"></div>
+				        <div class="leftNumber" data-bind="css: 'card' + Type, text: Label"></div>
 			        </div>
 			        <div class="centreCard">
-				        <div class="centreNumber" data-bind="text: Label"></div>
+				        <div class="centreNumber" data-bind="css: 'card' + Type + Colour, text: Label"></div>
 			        </div>
 			        <div class="bottomCard">
-				        <div class="rightNumber" data-bind="text: Label"></div>
+				        <div class="rightNumber" data-bind="css: 'card' + Type, text: Label"></div>
                     </div>
 		        </div>
 	        </div>
@@ -75,13 +75,13 @@
 	        <div class="outerCard">
 		        <div class="innerCard" data-bind="css: Colour">
 			        <div class="topCard">
-				        <div class="leftNumber" data-bind="text: Label"></div>
+				        <div class="leftNumber" data-bind="css: 'card' + Type, text: Label"></div>
 			        </div>
 			        <div class="centreCard">
-				        <div class="centreNumber" data-bind="text: Label"></div>
+				        <div class="centreNumber" data-bind="css: 'card' + Type + Colour, text: Label"></div>
 			        </div>
 			        <div class="bottomCard">
-				        <div class="rightNumber" data-bind="text: Label"></div>
+				        <div class="rightNumber" data-bind="css: 'card' + Type, text: Label"></div>
                     </div>
 		        </div>
 	        </div>

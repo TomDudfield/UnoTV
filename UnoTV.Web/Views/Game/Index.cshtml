@@ -18,15 +18,15 @@
     </ul>
     
     <div class="outerCard" data-bind="visible: card.Colour()">
-        <div class="innerCard" data-bind="css: card.Colour">
+        <div class="innerCard" data-bind="css: card.Colour()">
             <div class="topCard">
-                <div class="leftNumber" data-bind="text: card.Label"></div>
+                <div class="leftNumber" data-bind="css: 'card' + card.Type(), text: card.Label()"></div>
             </div>
             <div class="centreCard">
-                <div class="centreNumber" data-bind="text: card.Label"></div>
+                <div class="centreNumber" data-bind="css: 'card' + card.Type() + card.Colour(), text: card.Label()"></div>
             </div>
             <div class="bottomCard">
-                <div class="rightNumber" data-bind="text: card.Label"></div>
+                <div class="rightNumber" data-bind="css: 'card' + card.Type(), text: card.Label()"></div>
             </div>
         </div>
     </div>

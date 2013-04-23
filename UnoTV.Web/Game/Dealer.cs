@@ -54,17 +54,17 @@ namespace UnoTV.Web.Game
 
                 for (var i = 1; i <= MaxReverseCount; i++)
                 {
-                    cards.Add(new Card { Colour = colour, Value = 20, Label = "R", Type = CardType.Reverse });
+                    cards.Add(new Card { Colour = colour, Value = 20, Type = CardType.Reverse });
                 }
 
                 for (var i = 1; i <= MaxDrawCount; i++)
                 {
-                    cards.Add(new Card { Colour = colour, Value = 20, Label = "+2", Type = CardType.Draw });
+                    cards.Add(new Card { Colour = colour, Value = 20, Type = CardType.Draw });
                 }
 
                 for (var i = 1; i <= MaxSkipCount; i++)
                 {
-                    cards.Add(new Card { Colour = colour, Value = 20, Label = "S", Type = CardType.Skip });
+                    cards.Add(new Card { Colour = colour, Value = 20, Type = CardType.Skip });
                 }
 
                 for (var i = 1; i <= MaxFaceValue; i++)

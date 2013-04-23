@@ -12,6 +12,7 @@
             Colour: ko.observable(),
             Value: ko.observable(),
             Label: ko.observable(),
+            Type: ko.observable(),
         };
 
         self.init = function () {
@@ -54,6 +55,7 @@
                 self.card.Colour(card.Colour);
                 self.card.Value(card.Value);
                 self.card.Label(card.Label);
+                self.card.Type(card.Type);
             }
         };
 
@@ -71,6 +73,7 @@
             self.card.Colour(null);
             self.card.Value(null);
             self.card.Label(null);
+            self.card.Type(null);
         };
 
         self.gameHub.client.gameOver = function (winner) {

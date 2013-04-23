@@ -28,20 +28,192 @@
   color: orangered;
 }
 .red {
-  color: #ff0000;
-  background-color: #ff0000;
+  color: #ed1c24;
+  background-color: #ed1c24;
 }
 .blue {
-  color: #0000ff;
-  background-color: #0000ff;
+  color: #3953a4;
+  background-color: #3953a4;
 }
 .green {
-  color: #008000;
-  background-color: #008000;
+  color: #74b74a;
+  background-color: #74b74a;
 }
 .yellow {
-  color: #ffff00;
-  background-color: #ffff00;
+  color: #fff200;
+  background-color: #fff200;
+}
+.leftNumber {
+  float: left;
+  color: white;
+  -webkit-text-shadow: 3px 3px #231F20;
+  text-shadow: 3px 3px #231F20;
+}
+.rightNumber {
+  float: right;
+  color: white;
+  -webkit-text-shadow: 3px 3px #231F20;
+  text-shadow: 3px 3px #231F20;
+}
+.centreNumber {
+  margin: 0 auto;
+  font-size: 3.5em;
+  font-weight: 900;
+  padding-top: 35px;
+  -webkit-text-shadow: 5px 5px #231F20;
+  text-shadow: 5px 5px #231F20;
+  text-align: center;
+}
+.cardreversered {
+  margin: 35px 0 0 60px;
+  background: url('Images/card-sprites.png') no-repeat 0 -350px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 100px;
+  height: 170px;
+}
+.cardreverseyellow {
+  margin: 35px 0 0 60px;
+  background: url('Images/card-sprites.png') no-repeat -251px -350px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 100px;
+  height: 170px;
+}
+.cardreversegreen {
+  margin: 35px 0 0 60px;
+  background: url('Images/card-sprites.png') no-repeat -501px -350px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 100px;
+  height: 170px;
+}
+.cardreverseblue {
+  margin: 35px 0 0 60px;
+  background: url('Images/card-sprites.png') no-repeat -750px -350px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 100px;
+  height: 170px;
+}
+.cardreverse {
+  margin: 0;
+  background: url('Images/card-sprites.png') no-repeat -251px -1401px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 27px;
+  height: 46px;
+}
+.cardskipred {
+  margin: 35px 0 0 35px;
+  background: url('Images/card-sprites.png') no-repeat 0 0;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 160px;
+  height: 160px;
+}
+.cardskipyellow {
+  margin: 35px 0 0 35px;
+  background: url('Images/card-sprites.png') no-repeat -251px 0;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 160px;
+  height: 160px;
+}
+.cardskipgreen {
+  margin: 35px 0 0 35px;
+  background: url('Images/card-sprites.png') no-repeat -500px 0px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 160px;
+  height: 160px;
+}
+.cardskipblue {
+  margin: 35px 0 0 35px;
+  background: url('Images/card-sprites.png') no-repeat -750px 0;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 160px;
+  height: 160px;
+}
+.cardskip {
+  margin: 0;
+  background: url('Images/card-sprites.png') no-repeat 0 -1401px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 43px;
+  height: 43px;
+}
+.carddrawred {
+  margin: 35px 0 0 50px;
+  background: url('Images/card-sprites.png') no-repeat 0 -702px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 124px;
+  height: 177px;
+}
+.carddrawyellow {
+  margin: 35px 0 0 50px;
+  background: url('Images/card-sprites.png') no-repeat -251px -702px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 124px;
+  height: 177px;
+}
+.carddrawgreen {
+  margin: 35px 0 0 50px;
+  background: url('Images/card-sprites.png') no-repeat -501px -702px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 124px;
+  height: 177px;
+}
+.carddrawblue {
+  margin: 35px 0 0 50px;
+  background: url('Images/card-sprites.png') no-repeat -750px -702px;
+  -moz-background-size: 998px 1603px;
+  -o-background-size: 998px 1603px;
+  -webkit-background-size: 998px 1603px;
+  background-size: 998px 1603px;
+  width: 124px;
+  height: 177px;
+}
+.carddraw {
+  /* margin: 0;
+    background: url('Images/card-sprites.png') no-repeat 0 -1401px;
+    -moz-background-size: 998px 1603px;
+    -o-background-size: 998px 1603px;
+    -webkit-background-size: 998px 1603px;
+    background-size: 998px 1603px;
+    width: 43px;
+    height: 43px;*/
+
 }
 hr {
   clear: both;
@@ -57,7 +229,7 @@ hr {
   margin-right: 5px;
   margin-bottom: 5px;
   float: left;
-  border: solid 1px black;
+  border: solid 1px #231F20;
 }
 .innerCard {
   width: 230px;
@@ -82,28 +254,6 @@ hr {
   float: right;
   padding: 10px;
   border-radius: 10px;
-}
-.leftNumber {
-  float: left;
-  color: white;
-  -webkit-text-shadow: 3px 3px black;
-  text-shadow: 3px 3px black;
-}
-.rightNumber {
-  float: right;
-  color: white;
-  -webkit-text-shadow: 3px 3px black;
-  text-shadow: 3px 3px black;
-}
-.centreNumber {
-  margin: 0 auto;
-  font-size: 2.5em;
-  font-weight: 900;
-  text-align: center;
-  padding-top: 60px;
-  -webkit-text-shadow: 5px 5px black;
-  text-shadow: 5px 5px black;
-  width: 120px;
 }
 .cf:before,
 .cf:after {
