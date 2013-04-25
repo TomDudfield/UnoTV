@@ -75,11 +75,11 @@ namespace UnoTV.Web.Game
                 }
             }
 
-            //for (var i = 1; i <= MaxWildCount; i++)
-            //{
-            //    cards.Add(new Card { Colour = string.Empty, Value = 50, Type = CardType.Wild });
-            //    cards.Add(new Card { Colour = string.Empty, Value = 50, Label = "+4, Type = CardType.WildDraw });
-            //}
+            for (var i = 1; i <= MaxWildCount; i++)
+            {
+                cards.Add(new Card { Colour = CardColour.Black, Value = 50, Type = CardType.Wild });
+                cards.Add(new Card { Colour = CardColour.Black, Value = 50, Type = CardType.WildDraw });
+            }
 
             cards.Shuffle();
             return cards;

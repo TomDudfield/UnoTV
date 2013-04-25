@@ -16,6 +16,7 @@ namespace UnoTV.Web.Domain
         public const string Green = "green";
         public const string Red = "red";
         public const string Yellow = "yellow";
+        public const string Black = "black";
 
         public static IList<string> AsList()
         {

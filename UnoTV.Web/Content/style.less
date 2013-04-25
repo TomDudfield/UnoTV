@@ -2,6 +2,7 @@
 @blue: #3953A4;
 @green: #74B74A;
 @yellow: #FFF200;
+@black: #231F20;
 
 body {
     background: #876574;
@@ -53,19 +54,23 @@ body {
     color: @yellow;
     background-color: @yellow;
 }
+.black {
+    color: @black;
+    background-color: @black;
+}
 
 .leftNumber {
     float: left;
     color: white;
-    -webkit-text-shadow: 3px 3px #231F20;
-    text-shadow: 3px 3px #231F20;
+    -webkit-text-shadow: 3px 3px @black;
+    text-shadow: 3px 3px @black;
 }
 
 .rightNumber {
     float: right;
     color: white;
-    -webkit-text-shadow: 3px 3px #231F20;
-    text-shadow: 3px 3px #231F20;
+    -webkit-text-shadow: 3px 3px @black;
+    text-shadow: 3px 3px @black;
 }
 
 .centreNumber {
@@ -74,8 +79,8 @@ body {
     font-weight: 900;
     text-align: center;
     padding-top: 35px;
-    -webkit-text-shadow: 5px 5px #231F20;
-    text-shadow: 5px 5px #231F20;
+    -webkit-text-shadow: 5px 5px @black;
+    text-shadow: 5px 5px @black;
     text-align: center;
 }
 
@@ -222,14 +227,40 @@ body {
     height: 177px;
 }
 .carddraw {
-   /* margin: 0;
-    background: url('Images/card-sprites.png') no-repeat 0 -1401px;
+}
+
+.cardwildblack {
+    margin: 10px 0 0 15px;
+    background: url('Images/card-sprites.png') no-repeat -251px -1051px;
     -moz-background-size: 998px 1603px;
     -o-background-size: 998px 1603px;
     -webkit-background-size: 998px 1603px;
     background-size: 998px 1603px;
-    width: 43px;
-    height: 43px;*/
+    width: 191px;
+    height: 215px;
+}
+.cardwild {
+    background: url('Images/card-sprites.png') no-repeat -501px -1401px;
+    -moz-background-size: 998px 1603px;
+    -o-background-size: 998px 1603px;
+    -webkit-background-size: 998px 1603px;
+    background-size: 998px 1603px;
+    width: 36px;
+    height: 41px;
+}
+
+.cardwilddrawblack {
+    margin: 30px 0 0 50px;
+    background: url('Images/card-sprites.png') no-repeat 0 -1051px;
+    -moz-background-size: 998px 1603px;
+    -o-background-size: 998px 1603px;
+    -webkit-background-size: 998px 1603px;
+    background-size: 998px 1603px;
+    width: 121px;
+    height: 171px;
+}
+.cardwilddraw {
+
 }
 
 hr {
@@ -248,7 +279,7 @@ hr {
     margin-right: 5px;
     margin-bottom: 5px;
 	float:left;
-	border:solid 1px #231F20;
+	border:solid 1px @black;
 }
 
 .innerCard {
